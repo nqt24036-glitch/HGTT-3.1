@@ -746,7 +746,8 @@ const App: React.FC = () => {
     
     // --- START: NEW QUEST SYSTEM ---
     const handleQuestCompletion = useCallback((playerState: Player, quest: Quest): { player: Player; needsRecalculation: boolean } => {
-        let updatedPlayer = JSON.parse(JSON.stringify(playerState));
+        // FIX: Cast the result of JSON.parse to Player to preserve literal types and prevent type widening.
+        let updatedPlayer = JSON.parse(JSON.stringify(playerState)) as Player;
         let needsRecalculation = false;
         
         const questCompleteMsg = `Hoàn thành nhiệm vụ: ${quest.title}!`;
@@ -818,7 +819,8 @@ const App: React.FC = () => {
 
     // FIX: Updated the 'action' type to include 'event' to handle event-based quest progression.
     const updateQuestProgress = useCallback((playerState: Player, action: { type: 'KILL' | 'COLLECT' | 'CRAFT' | 'event'; targetId: string; }): Player => {
-        let updatedPlayer = JSON.parse(JSON.stringify(playerState));
+        // FIX: Cast the result of JSON.parse to Player to preserve literal types and prevent type widening.
+        let updatedPlayer = JSON.parse(JSON.stringify(playerState)) as Player;
         let needsRecalculation = false;
 
         // 1. Update Story Quest
