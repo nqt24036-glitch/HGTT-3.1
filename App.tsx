@@ -816,7 +816,8 @@ const App: React.FC = () => {
         return { player: updatedPlayer, needsRecalculation };
     }, [addNotification, addActivityLog, masterItemList]);
 
-    const updateQuestProgress = useCallback((playerState: Player, action: { type: 'KILL' | 'COLLECT' | 'CRAFT'; targetId: string; }): Player => {
+    // FIX: Updated the 'action' type to include 'event' to handle event-based quest progression.
+    const updateQuestProgress = useCallback((playerState: Player, action: { type: 'KILL' | 'COLLECT' | 'CRAFT' | 'event'; targetId: string; }): Player => {
         let updatedPlayer = JSON.parse(JSON.stringify(playerState));
         let needsRecalculation = false;
 
@@ -835,6 +836,9 @@ const App: React.FC = () => {
                         if (monsterArea?.id === 'area_me_anh') progressMade = true;
                     }
                 } else if (action.type === 'CRAFT' && storyQuest.objective.type === 'craft' && storyQuest.objective.targetId === action.targetId) {
+                    progressMade = true;
+                // FIX: Added logic to handle 'event' type actions for story quests.
+                } else if (action.type === 'event' && storyQuest.objective.type === 'event' && storyQuest.id === action.targetId) {
                     progressMade = true;
                 } else if (action.type === 'COLLECT' && storyQuest.objective.type === 'collect' && storyQuest.objective.itemId === action.targetId) {
                     const currentCount = updatedPlayer.inventory.filter((i: Item) => i.id === action.targetId).length;

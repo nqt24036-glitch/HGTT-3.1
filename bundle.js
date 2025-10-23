@@ -1,7 +1,12 @@
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -14,17 +19,40 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// fake-react-shim.js
+var require_fake_react_shim = __commonJS({
+  "fake-react-shim.js"(exports, module) {
+    "use strict";
+    var react2 = require("react");
+    var import_react_dom = require("react-dom/client");
+    var App = () => {
+      return /* @__PURE__ */ react2.createElement("div", null, "Hello World");
+    };
+    var rootElement = document.getElementById("root");
+    if (!rootElement) {
+      throw new Error("Could not find root element to mount to");
+    }
+    var root = (0, import_react_dom.createRoot)(rootElement);
+    root.render(/* @__PURE__ */ react2.createElement(App, null));
+  }
+});
 
 // index.tsx
 var index_tsx_exports = {};
 __export(index_tsx_exports, {
   default: () => App_default
 });
-var import_react20 = require("react");
+var import_react20 = __toESM(require("react"));
+var import_react_dom = __toESM(require("react-dom/client"));
 
 // App.tsx
-var import_react19 = require("react");
+var import_react19 = __toESM(require("react"));
 
 // data/gameData.ts
 var TITLES = [
@@ -375,7 +403,7 @@ var STORY_ITEMS = [
   { id: "item_story_013", name: "La B\xE0n Huy\u1EC5n C\u1EA3nh", type: "Nhi\u1EC7m v\u1EE5", rarity: "Th\u1EA7n Tho\u1EA1i", icon: "\uD83E\uDDED", description: "M\u1ED9t chi\u1EBFc la b\xE0n c\u1ED5 x\u01B0a c\xF3 th\u1EC3 ch\u1EC9 \u0111\u01B0\u1EDDng v\xE0o Huy\u1EC5n C\u1EA3nh Lu\xE2n H\u1ED3i, n\u01A1i c\u1EA5t gi\u1EEF nh\u1EEFng b\xED m\u1EADt c\u1EE7a Thi\xEAn \u0110\u1EA1o.", value: 0 }
 ];
 var THEMATIC_ITEMS = [
-  { id: "item_com_01", name: "\xC1o V\u1EA3i Thanh Th\u1EE7y", type: "\xC1o gi\xE1p", rarity: "Ph\u1ED5 th\xF4ng", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { defense: 13 }, requirement: "C\u1EA5p 1", description: "M\u1ED9t chi\u1EBFc \xE1o v\u1EA3i \u0111\u01A1n s\u01A1 nh\u01B0ng ch\u1EAFc ch\u1EAFn, \u0111\u01B0\u1EE3c c\xE1c th\u1EE3 may trong Th\xF4n Thanh Th\u1EE7y l\xE0m ra.", story: "M\u1ED7i \u0111\u01B0\u1EDDng kim m\u0169i ch\u1EC9 \u0111\u1EC1u ch\u1EE9a \u0111\u1EF1ng hy v\u1ECDng v\u1EC1 m\u1ED9t cu\u1ED9c s\u1ED1ng b\xECnh y\xEAn.", value: 10 },
+  { id: "item_com_01", name: "\xC1o V\u1EA3i Thanh Th\u1EE7y", type: "\xC1o gi\xE1p", rarity: "Ph\u1ED5 th\xF4ng", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { defense: 13 }, requirement: "C\u1EA5p 1", description: "M\u1ED9t chi\u1EBFc \xE1o v\u1EA3i \u0111\u01A0n s\u01A1 nh\u01B0ng ch\u1EAFc ch\u1EAFn, \u0111\u01B0\u1EE3c c\xE1c th\u1EE3 may trong Th\xF4n Thanh Th\u1EE7y l\xE0m ra.", story: "M\u1ED7i \u0111\u01B0\u1EDDng kim m\u0169i ch\u1EC9 \u0111\u1EC1u ch\u1EE9a \u0111\u1EF1ng hy v\u1ECDng v\u1EC1 m\u1ED9t cu\u1ED9c s\u1ED1ng b\xECnh y\xEAn.", value: 10 },
   { id: "item_com_02", name: "Ki\u1EBFm S\u1EAFt Luy\u1EC7n T\u1EADp", type: "V\u0169 kh\xED", rarity: "Ph\u1ED5 th\xF4ng", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 9 }, requirement: "C\u1EA5p 2", description: "V\u0169 kh\xED ti\xEAu chu\u1EA9n cho c\xE1c tu s\u0129 m\u1EDBi nh\u1EADp m\xF4n, d\xF9ng \u0111\u1EC3 r\xE8n luy\u1EC7n th\xE2n th\u1EC3.", story: "Tr\xEAn th\xE2n ki\u1EBFm c\xF2n kh\u1EAFc ch\u1EEF 'C\u1EA7n c\xF9'.", value: 12 },
   { id: "item_com_03", name: "Gi\xE1p Da Chu\u1ED9t R\u1EEBng", type: "\xC1o gi\xE1p", rarity: "Ph\u1ED5 th\xF4ng", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { defense: 19 }, requirement: "C\u1EA5p 3", description: "\u0110\u01B0\u1EE3c l\xE0m t\u1EEB da c\u1EE7a nh\u1EEFng con chu\u1ED9t l\u1EDBn s\u1ED1ng trong r\u1EEBng, c\xF3 kh\u1EA3 n\u0103ng ch\u1ED1ng \u0111\u1EE1 c\xE1c v\u1EBFt c\xE0o nh\u1ECF.", story: "V\u1EABn c\xF2n thoang tho\u1EA3ng m\xF9i c\u1EE7a r\u1EEBng xanh.", value: 15 },
   { id: "item_com_04", name: "\u0110ao Tu\u1EA7n Tra", type: "V\u0169 kh\xED", rarity: "Ph\u1ED5 th\xF4ng", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 13 }, requirement: "C\u1EA5p 4", description: "V\u0169 kh\xED trang b\u1ECB cho l\xEDnh g\xE1c c\u1EE7a Th\xE0nh V\xE2n L\xE2m.", story: "M\u1ED9t v\u0169 kh\xED \u0111\xE1ng tin c\u1EADy cho nh\u1EEFng \u0111\xEAm d\xE0i canh g\xE1c.", value: 18 },
@@ -425,51 +453,7 @@ var THEMATIC_ITEMS = [
   { id: "item_rar_17", name: "B\u0103ng Tinh Ki\u1EBFm", type: "V\u0169 kh\xED", rarity: "Qu\xFD", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 71, critRate: 0.03 }, requirement: "C\u1EA5p 32", description: "Thanh ki\u1EBFm \u0111\u01B0\u1EE3c l\xE0m t\u1EEB b\u0103ng v\u0129nh c\u1EEDu, t\u1ECFa ra h\xE0n kh\xED.", story: "C\xF3 th\u1EC3 l\xE0m ch\u1EADm k\u1EBB \u0111\u1ECBch khi g\xE2y ra v\u1EBFt th\u01B0\u01A1ng.", value: 310 },
   { id: "item_rar_18", name: "H\u1ECFa V\xE2n Ch\xE2u", type: "Ph\xE1p b\u1EA3o", rarity: "Qu\xFD", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDC8D", stats: { hp: 230 }, requirement: "C\u1EA5p 33", description: "Vi\xEAn ng\u1ECDc ch\u1EE9a \u0111\u1EF1ng linh l\u1EF1c c\u1EE7a h\u1ECFa, \u1EA5m \xE1p khi ch\u1EA1m v\xE0o.", story: "Trong \u0111\xEAm t\u1ED1i, n\xF3 t\u1ECFa ra \xE1nh s\xE1ng nh\u01B0 m\u1ED9t \u0111\xE1m m\xE2y l\u1EEDa nh\u1ECF.", value: 320 },
   { id: "item_rar_19", name: "\xC2m Phong \u0110ao", type: "V\u0169 kh\xED", rarity: "Qu\xFD", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 77, critRate: 0.03 }, requirement: "C\u1EA5p 34", description: "L\u01B0\u1EE1i \u0111ao m\u1ECFng nh\u01B0 c\xE1nh ve, \u0111\u01B0\u1EE3c r\xE8n trong n\u01A1i \xE2m kh\xED n\u1EB7ng n\u1EC1.", story: "Ti\u1EBFng vung \u0111ao nh\u01B0 ti\u1EBFng gi\xF3 r\xEDt qua khe c\u1EEDa \u0111\u1ECBa ng\u1EE5c.", value: 330 },
-  { id: "item_rar_20", name: "Linh Quy Gi\xE1p", type: "Ph\xE1p b\u1EA3o", rarity: "Qu\xFD", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDC8D", stats: { hp: 250 }, requirement: "C\u1EA5p 35", description: "M\u1ED9t chi\u1EBFc mai r\xF9a nh\u1ECF, \u0111\u01B0\u1EE3c kh\u1EAFc \u0111\u1EA7y ph\xF9 v\u0103n ph\xF2ng ng\u1EF1.", story: "L\xE0 b\xF9a h\u1ED9 m\u1EC7nh c\u1EE7a nh\u1EEFng ng\u01B0\u1EDDi hay \u0111i xa.", value: 340 },
-  { id: "item_epi_01", name: "Gi\xE1p Tr\u1EA3m Phong", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 900, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 1", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c thi\u1EBFt k\u1EBF \u0111\u1EC3 gi\u1EA3m t\u1ED1i \u0111a s\u1EE9c c\u1EA3n c\u1EE7a gi\xF3, t\u0103ng s\u1EF1 linh ho\u1EA1t.", story: "M\u1EB7c n\xF3 v\xE0o, c\u1EA3m gi\xE1c nh\u01B0 c\xF3 th\u1EC3 c\u01B0\u1EE1i gi\xF3 m\xE0 \u0111i.", value: 400, effect: "Khi\u1EBFn di chuy\u1EC3n nh\u1EB9 nh\xE0ng h\u01A1n, t\u0103ng nh\u1EB9 t\u1ED1c \u0111\u1ED9 ngo\xE0i chi\u1EBFn \u0111\u1EA5u." },
-  { id: "item_epi_02", name: "H\u1EAFc Th\u1EA1ch H\u1ED9 Thu\u1EABn", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 1480, magicDefense: 400 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 2", description: "M\u1ED9t t\u1EA5m khi\xEAn nh\u1ECF l\xE0m t\u1EEB H\u1EAFc Th\u1EA1ch, c\u1EF1c k\u1EF3 c\u1EE9ng r\u1EAFn.", story: "N\xF3 \u0111\xE3 t\u1EEBng ch\u1EB7n m\u1ED9t \u0111\xF2n to\xE0n l\u1EF1c c\u1EE7a m\u1ED9t y\xEAu th\xFA Tr\xFAc C\u01A1 K\u1EF3.", value: 420, effect: "C\xF3 t\u1EC9 l\u1EC7 nh\u1ECF ch\u1EB7n ho\xE0n to\xE0n m\u1ED9t \u0111\xF2n t\u1EA5n c\xF4ng v\u1EADt l\xFD y\u1EBFu." },
-  { id: "item_epi_03", name: "Lam Di\u1EC7p Sam", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 1100, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 3", description: "Chi\u1EBFc \xE1o \u0111\u01B0\u1EE3c d\u1EC7t t\u1EEB t\u01A1 c\u1EE7a m\u1ED9t lo\xE0i linh t\u1EB1m, c\xF3 m\xE0u xanh nh\u01B0 l\xE1 bi\u1EBFc.", story: "M\u1EB7c v\xE0o c\u1EA3m th\u1EA5y m\xE1t m\u1EBB, tinh th\u1EA7n t\u1EC9nh t\xE1o.", value: 440, effect: "Gi\xFAp tinh th\u1EA7n minh m\u1EABn, gi\u1EA3m nh\u1EB9 kh\u1EA3 n\u0103ng b\u1ECB \u1EA3nh h\u01B0\u1EDFng b\u1EDFi hi\u1EC7u \u1EE9ng x\u1EA5u." },
-  { id: "item_epi_04", name: "V\xF2ng Kim C\xF4", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 1760, magicDefense: 500 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 4", description: "M\u1ED9t chi\u1EBFc v\xF2ng v\xE0ng, khi \u0111\u01B0\u1EE3c truy\u1EC1n linh l\u1EF1c s\u1EBD tr\u1EDF n\xEAn v\xF4 c\xF9ng c\u1EE9ng r\u1EAFn.", story: "Kh\xF4ng ph\u1EA3i l\xE0 c\xE1i v\xF2ng tr\xEAn \u0111\u1EA7u c\u1EE7a T\u1EC1 Thi\xEAn \u0110\u1EA1i Th\xE1nh \u0111\xE2u.", value: 460 },
-  { id: "item_epi_05", name: "B\xE1ch Hoa Y", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 1300, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 5", description: "Chi\u1EBFc \xE1o \u0111\u01B0\u1EE3c th\xEAu h\xECnh tr\u0103m lo\xE0i hoa, t\u1ECFa ra h\u01B0\u01A1ng th\u01A1m d\u1ECBu nh\u1EB9.", story: "L\xE0 t\xE1c ph\u1EA9m c\u1EE7a m\u1ED9t ti\xEAn t\u1EED y\xEAu hoa c\u1ECF.", value: 480 },
-  { id: "item_epi_06", name: "Chu\xF4ng L\u1EA1c H\u1ED3n", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 2040, magicDefense: 600 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 6", description: "Ti\u1EBFng chu\xF4ng c\xF3 th\u1EC3 l\xE0m nhi\u1EC5u lo\u1EA1n th\u1EA7n tr\xED c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng.", story: "H\xE3y c\u1EA9n th\u1EADn, ch\xEDnh b\u1EA1n c\u0169ng c\xF3 th\u1EC3 b\u1ECB \u1EA3nh h\u01B0\u1EDFng n\u1EBFu kh\xF4ng t\u1EADp trung.", value: 500, effect: "Ti\u1EBFng chu\xF4ng c\xF3 t\u1EC9 l\u1EC7 nh\u1ECF l\xE0m \u0111\u1ED1i ph\u01B0\u01A1ng hoang mang, gi\u1EA3m ch\xEDnh x\xE1c trong 1 l\u01B0\u1EE3t." },
-  { id: "item_epi_07", name: "Huy\u1EBFt S\u1EAFc Chi\u1EBFn Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 1500, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 7", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c nhu\u1ED9m m\xE0u \u0111\u1ECF c\u1EE7a m\xE1u, mang s\xE1t kh\xED n\u1ED3ng \u0111\u1EADm.", story: "C\xE0ng chi\u1EBFn \u0111\u1EA5u, b\u1ED9 gi\xE1p c\xE0ng tr\u1EDF n\xEAn s\xE1ng r\u1EF1c.", value: 520 },
-  { id: "item_epi_08", name: "Phi\xEAn Thi\xEAn \u1EA4n", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 2320, magicDefense: 700 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 8", description: "M\u1ED9t chi\u1EBFc \u1EA5n c\xF3 th\u1EC3 ph\xF3ng to, \u0111\u1EADp xu\u1ED1ng v\u1EDBi s\u1EE9c m\u1EA1nh ng\xE0n c\xE2n.", story: "L\xE0 m\u1ED9t ph\xE1p b\u1EA3o m\xF4 ph\u1ECFng theo m\u1ED9t m\xF3n c\u1ED5 v\u1EADt th\u1EA7n tho\u1EA1i.", value: 540 },
-  { id: "item_epi_09", name: "Minh Quang Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 1700, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 9", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c \u0111\xE1nh b\xF3ng lo\xE1ng, c\xF3 th\u1EC3 ph\u1EA3n chi\u1EBFu \xE1nh s\xE1ng g\xE2y ch\xF3i m\u1EAFt k\u1EBB \u0111\u1ECBch.", story: "V\u1EEBa l\xE0 ph\xF2ng ng\u1EF1, v\u1EEBa l\xE0 m\u1ED9t c\xF4ng c\u1EE5 chi\u1EBFn thu\u1EADt.", value: 560, effect: "Khi b\u1ECB t\u1EA5n c\xF4ng, c\xF3 t\u1EC9 l\u1EC7 ph\u1EA3n chi\u1EBFu \xE1nh s\xE1ng, l\xE0m gi\u1EA3m ch\xEDnh x\xE1c c\u1EE7a k\u1EBB \u0111\u1ECBch." },
-  { id: "item_epi_10", name: "H\u1ED3 L\xF4 H\xFAt Linh", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 2600, magicDefense: 800 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 10", description: "M\u1ED9t qu\u1EA3 h\u1ED3 l\xF4 nh\u1ECF, c\xF3 th\u1EC3 h\xFAt linh kh\xED t\u1EEB k\u1EBB \u0111\u1ECBch.", story: "B\xEAn trong l\xE0 m\u1ED9t kh\xF4ng gian nh\u1ECF, d\xF9ng \u0111\u1EC3 ch\u1EE9a \u0111\u1EF1ng linh kh\xED.", value: 580 },
-  { id: "item_epi_11", name: "Gi\xE1p Gai Ph\u1EA3n Th\u01B0\u01A1ng", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 1900, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 11", description: "B\u1EC1 m\u1EB7t b\u1ED9 gi\xE1p \u0111\u1EA7y nh\u1EEFng chi\u1EBFc gai nh\u1ECDn, l\xE0m b\u1ECB th\u01B0\u01A1ng k\u1EBB t\u1EA5n c\xF4ng.", story: "C\xE1ch ph\xF2ng ng\u1EF1 t\u1ED1t nh\u1EA5t l\xE0 t\u1EA5n c\xF4ng.", value: 600 },
-  { id: "item_epi_12", name: "C\u1EDD L\u1EC7nh Ng\u0169 H\xE0nh", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 2880, magicDefense: 900 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 12", description: "L\xE1 c\u1EDD nh\u1ECF th\xEAu h\xECnh Ng\u0169 h\xE0nh, c\xF3 th\u1EC3 t\u0103ng c\u01B0\u1EDDng ph\xE1p thu\u1EADt t\u01B0\u01A1ng \u1EE9ng.", story: "L\xE0 v\u1EADt b\u1EA5t ly th\xE2n c\u1EE7a c\xE1c tr\u1EADn ph\xE1p s\u01B0.", value: 620 },
-  { id: "item_epi_13", name: "Ng\xE2n Long Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 2100, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 13", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c ch\u1EBF t\xE1c ph\u1ECFng theo v\u1EA3y c\u1EE7a r\u1ED3ng b\u1EA1c.", story: "Mang l\u1EA1i cho ng\u01B0\u1EDDi m\u1EB7c s\u1EF1 uy nghi\xEAm c\u1EE7a lo\xE0i r\u1ED3ng.", value: 640 },
-  { id: "item_epi_14", name: "\u0110\xE8n D\u1EABn H\u1ED3n", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 3160, magicDefense: 1e3 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 14", description: "Chi\u1EBFc \u0111\xE8n l\u1ED3ng c\xF3 th\u1EC3 soi r\u1ECDi \u0111\u01B0\u1EDDng \u0111i trong c\xF5i \xE2m.", story: "C\u0169ng c\xF3 th\u1EC3 d\xF9ng \u0111\u1EC3 tri\u1EC7u h\u1ED3i c\xE1c oan h\u1ED3n y\u1EBFu \u1EDBt \u0111\u1EC3 chi\u1EBFn \u0111\u1EA5u.", value: 660 },
-  { id: "item_epi_15", name: "Gi\xE1p Tr\u1ECDng L\u1EF1c", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 2300, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 15", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c kh\u1EAFc tr\u1ECDng l\u1EF1c tr\u1EADn, c\u1EF1c k\u1EF3 n\u1EB7ng.", story: "M\u1EB7c n\xF3 \u0111\u1EC3 tu luy\u1EC7n c\xF3 th\u1EC3 l\xE0m \xEDt c\xF4ng to.", value: 680 },
-  { id: "item_epi_16", name: "La B\xE0n T\u1EA7m B\u1EA3o", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 3440, magicDefense: 1100 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 16", description: "Chi\u1EBFc la b\xE0n c\xF3 th\u1EC3 ch\u1EC9 \u0111\u1EBFn n\u01A1i c\xF3 b\u1EA3o v\u1EADt ho\u1EB7c linh kh\xED m\u1EA1nh.", story: "\u0110\xF4i khi n\xF3 c\u0169ng ch\u1EC9 \u0111\u1EBFn nh\u1EEFng n\u01A1i c\u1EF1c k\u1EF3 nguy hi\u1EC3m.", value: 700 },
-  { id: "item_epi_17", name: "Linh V\u0169 Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 2500, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 17", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c l\xE0m t\u1EEB l\xF4ng v\u0169 c\u1EE7a m\u1ED9t lo\xE0i linh \u0111i\u1EC3u.", story: "Gi\xFAp ng\u01B0\u1EDDi m\u1EB7c di chuy\u1EC3n nh\u1EB9 nh\xE0ng v\xE0 nhanh nh\u1EB9n h\u01A1n.", value: 720 },
-  { id: "item_epi_18", name: "S\u01A1n H\xE0 X\xE3 T\u1EAFc \u0110\u1ED3", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 3720, magicDefense: 1200 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 18", description: "M\u1ED9t b\u1EE9c tranh cu\u1ED9n, c\xF3 th\u1EC3 nh\u1ED1t k\u1EBB \u0111\u1ECBch v\xE0o trong \u0111\xF3.", story: "B\xEAn trong l\xE0 m\u1ED9t th\u1EBF gi\u1EDBi nh\u1ECF c\xF3 n\xFAi s\xF4ng, c\xE2y c\u1ECF.", value: 740 },
-  { id: "item_epi_19", name: "V\xF4 \u1EA2nh Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Hi\u1EBFm", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 2700, evasion: 1 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 19", description: "B\u1ED9 gi\xE1p c\xF3 th\u1EC3 t\xE0ng h\xECnh trong m\u1ED9t th\u1EDDi gian ng\u1EAFn.", story: "C\xF4ng c\u1EE5 ho\xE0n h\u1EA3o cho vi\u1EC7c \xE1m s\xE1t v\xE0 do th\xE1m.", value: 760 },
-  { id: "item_epi_20", name: "Th\xE1p Tr\u1EA5n Y\xEAu", type: "Ph\xE1p b\u1EA3o", rarity: "Hi\u1EBFm", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDEE1\uFE0F", stats: { defense: 4e3, magicDefense: 1300 }, requirement: "Luy\u1EC7n Kh\xED T\u1EA7ng 20", description: "M\u1ED9t t\xF2a th\xE1p nh\u1ECF, c\xF3 kh\u1EA3 n\u0103ng tr\u1EA5n \xE1p v\xE0 l\xE0m suy y\u1EBFu y\xEAu kh\xED.", story: "L\xE0 kh\u1EAFc tinh c\u1EE7a nhi\u1EC1u lo\u1EA1i y\xEAu th\xFA.", value: 780 },
-  { id: "item_leg_01", name: "L\u01B0u Quang Chi\u1EBFn Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 11e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 1", description: "B\u1ED9 gi\xE1p ph\xE1t ra \xE1nh s\xE1ng b\u1EA3y m\xE0u, \u0111\u01B0\u1EE3c r\xE8n t\u1EEB m\u1ED9t lo\u1EA1i kho\xE1ng th\u1EA1ch hi\u1EBFm th\u1EA5y.", story: "Truy\u1EC1n thuy\u1EBFt k\u1EC3 r\u1EB1ng n\xF3 \u0111\u01B0\u1EE3c r\xE8n d\u01B0\u1EDBi \xE1nh tr\u0103ng trong 49 ng\xE0y.", value: 1500, effect: "\xC1nh s\xE1ng c\u1EE7a chi\u1EBFn gi\xE1p g\xE2y nhi\u1EC5u lo\u1EA1n, t\u0103ng nh\u1EB9 kh\u1EA3 n\u0103ng n\xE9 tr\xE1nh c\xE1c \u0111\xF2n t\u1EA5n c\xF4ng ph\xE1p thu\u1EADt." },
-  { id: "item_leg_02", name: "Phi S\u01B0\u01A1ng Ki\u1EBFm", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 14400, magicDefense: 5e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 2", description: "Th\xE2n ki\u1EBFm l\u1EA1nh nh\u01B0 b\u0103ng, khi vung l\xEAn t\u1EA1o ra m\u1ED9t l\u1EDBp s\u01B0\u01A1ng m\u1ECFng.", story: "L\xE0 thanh ki\u1EBFm c\u1EE7a m\u1ED9t v\u1ECB ki\u1EBFm ti\xEAn \u0111\xE3 \u1EA9n th\u1EBF t\u1EEB l\xE2u.", value: 1550, effect: "\u0110\xF2n \u0111\xE1nh mang theo h\xE0n kh\xED, c\xF3 t\u1EC9 l\u1EC7 l\xE0m ch\u1EADm t\u1ED1c \u0111\u1ED9 c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng." },
-  { id: "item_leg_03", name: "B\u1EA5t \u0110\u1ED9ng Minh V\u01B0\u01A1ng Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 13e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 3", description: "B\u1ED9 gi\xE1p n\u1EB7ng, mang l\u1EA1i kh\u1EA3 n\u0103ng ph\xF2ng ng\u1EF1 g\u1EA7n nh\u01B0 tuy\u1EC7t \u0111\u1ED1i.", story: "Khi m\u1EB7c v\xE0o, ng\u01B0\u1EDDi ta c\xF3 c\u1EA3m gi\xE1c v\u1EEFng ch\xE3i nh\u01B0 m\u1ED9t ng\u1ECDn n\xFAi.", value: 1600 },
-  { id: "item_leg_04", name: "Truy H\u1ED3n Th\u01B0\u01A1ng", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 16800, magicDefense: 6e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 4", description: "M\u0169i th\u01B0\u01A1ng c\xF3 kh\u1EA3 n\u0103ng kh\xF3a ch\u1EB7t linh h\u1ED3n c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng.", story: "M\u1ED9t khi \u0111\xE3 b\u1ECB n\xF3 nh\u1EAFm \u0111\u1EBFn, kh\xF4ng ai c\xF3 th\u1EC3 tho\xE1t kh\u1ECFi.", value: 1650, effect: "C\xE1c \u0111\xF2n t\u1EA5n c\xF4ng b\u1ECF qua m\u1ED9t ph\u1EA7n kh\u1EA3 n\u0103ng n\xE9 tr\xE1nh c\u1EE7a m\u1EE5c ti\xEAu." },
-  { id: "item_leg_05", name: "Thi\xEAn C\u01A1 B\xE0o", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 15e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 5", description: "Chi\u1EBFc \xE1o b\xE0o c\xF3 th\u1EC3 suy di\u1EC5n thi\xEAn c\u01A1, gi\xFAp ng\u01B0\u1EDDi m\u1EB7c n\xE9 tr\xE1nh nguy hi\u1EC3m.", story: "Tr\xEAn \xE1o th\xEAu \u0111\u1EA7y nh\u1EEFng bi\u1EC3u t\u01B0\u1EE3ng k\u1EF3 l\u1EA1, d\u01B0\u1EDDng nh\u01B0 l\xE0 m\u1ED9t lo\u1EA1i tr\u1EADn \u0111\u1ED3.", value: 1700, effect: "T\u0103ng nh\u1EB9 t\u1EC9 l\u1EC7 n\xE9 tr\xE1nh c\xE1c \u0111\xF2n t\u1EA5n c\xF4ng ch\xED m\u1EA1ng." },
-  { id: "item_leg_06", name: "Th\u1EA5t Tinh Ki\u1EBFm", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 19200, magicDefense: 7e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 6", description: "Thanh ki\u1EBFm \u0111\u01B0\u1EE3c r\xE8n t\u1EEB b\u1EA3y lo\u1EA1i thi\xEAn th\u1EA1ch, t\u01B0\u01A1ng \u1EE9ng v\u1EDBi b\u1EA3y ng\xF4i sao B\u1EAFc \u0110\u1EA9u.", story: "Khi c\xF3 \xE1nh sao, s\u1EE9c m\u1EA1nh c\u1EE7a n\xF3 s\u1EBD \u0111\u01B0\u1EE3c t\u0103ng l\xEAn b\u1ED9i ph\u1EA7n.", value: 1750 },
-  { id: "item_leg_07", name: "C\u1EEDu U Ma Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 17e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 7", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c r\xE8n t\u1EEB s\u1EAFt d\u01B0\u1EDBi C\u1EEDu U, mang ma kh\xED n\u1EB7ng n\u1EC1.", story: "N\xF3 c\xF3 th\u1EC3 h\u1EA5p th\u1EE5 o\xE1n kh\xED \u0111\u1EC3 t\u1EF1 s\u1EEDa ch\u1EEFa.", value: 1800 },
-  { id: "item_leg_08", name: "Di\u1EC7t Th\u1EA7n Cung", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 21600, magicDefense: 8e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 8", description: "C\xE2y cung huy\u1EC1n tho\u1EA1i, nghe \u0111\u1ED3n c\xF3 th\u1EC3 b\u1EAFn h\u1EA1 c\u1EA3 th\u1EA7n ti\xEAn.", story: "C\u1EA7n c\xF3 s\u1EE9c m\u1EA1nh to l\u1EDBn m\u1EDBi c\xF3 th\u1EC3 k\xE9o \u0111\u01B0\u1EE3c d\xE2y cung c\u1EE7a n\xF3.", value: 1850 },
-  { id: "item_leg_09", name: "V\u1EA1n T\u01B0\u1EE3ng B\xE0o", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 19e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 9", description: "Chi\u1EBFc \xE1o b\xE0o c\xF3 th\u1EC3 bi\u1EBFn \u1EA3o th\xE0nh m\u1ECDi h\xECnh d\u1EA1ng, gi\xFAp ng\u1EE5y trang ho\xE0n h\u1EA3o.", story: "L\xE0 b\u1EA3o v\u1EADt c\u1EE7a m\u1ED9t t\xF4ng m\xF4n chuy\xEAn v\u1EC1 \xE1m s\xE1t \u0111\xE3 b\u1ECB di\u1EC7t vong.", value: 1900 },
-  { id: "item_leg_10", name: "Tu La \u0110ao", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 24e3, magicDefense: 9e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 10", description: "Thanh \u0111ao mang s\xE1t kh\xED c\u1EE7a chi\u1EBFn tr\u01B0\u1EDDng Tu La.", story: "C\xE0ng ch\xE9m gi\u1EBFt nhi\u1EC1u, n\xF3 c\xE0ng tr\u1EDF n\xEAn m\u1EA1nh m\u1EBD.", value: 1950 },
-  { id: "item_leg_11", name: "Th\xE1nh Linh Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 21e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 11", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c ban ph\u01B0\u1EDBc b\u1EDFi th\xE1nh quang, c\xF3 kh\u1EA3 n\u0103ng thanh t\u1EA9y t\xE0 ma.", story: "Ch\u1EC9 nh\u1EEFng ng\u01B0\u1EDDi c\xF3 tr\xE1i tim thu\u1EA7n khi\u1EBFt m\u1EDBi c\xF3 th\u1EC3 m\u1EB7c n\xF3.", value: 2e3 },
-  { id: "item_leg_12", name: "Ph\xE1 Thi\xEAn K\xEDch", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 26400, magicDefense: 1e4 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 12", description: "C\xE2y k\xEDch c\xF3 s\u1EE9c m\u1EA1nh c\xF3 th\u1EC3 ch\u1ECDc th\u1EE7ng c\u1EA3 b\u1EA7u tr\u1EDDi.", story: "V\u0169 kh\xED c\u1EE7a m\u1ED9t v\u1ECB chi\u1EBFn th\u1EA7n c\u1ED5 \u0111\u1EA1i.", value: 2050 },
-  { id: "item_leg_13", name: "Huy\u1EC5n \u1EA2nh Y", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 23e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 13", description: "Chi\u1EBFc \xE1o m\u1ECFng nh\u01B0 s\u01B0\u01A1ng, c\xF3 th\u1EC3 t\u1EA1o ra \u1EA3o \u1EA3nh \u0111\u1EC3 \u0111\xE1nh l\u1EEBa \u0111\u1ED1i ph\u01B0\u01A1ng.", story: "Ng\u01B0\u1EDDi m\u1EB7c n\xF3 di chuy\u1EC3n nh\u01B0 m\u1ED9t b\xF3ng ma.", value: 2100 },
-  { id: "item_leg_14", name: "C\xE0n Kh\xF4n Quy\u1EC3n", type: "Ph\xE1p b\u1EA3o", rarity: "Truy\u1EC1n K\u1EF3", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDCDC", stats: { hp: 5e4, mp: 2e4 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 14", description: "M\u1ED9t b\u1EE9c tranh cu\u1ED9n ch\u1EE9a \u0111\u1EF1ng s\u1EE9c m\u1EA1nh c\u1EE7a c\xE0n kh\xF4n, c\xF3 th\u1EC3 c\xF4ng th\u1EE7 to\xE0n di\u1EC7n.", story: "B\xEAn trong l\xE0 c\u1EA3 m\u1ED9t th\u1EBF gi\u1EDBi nh\u1ECF.", value: 2150, effect: "Gi\u1EA3m 5% ti\xEAu hao MP cho t\u1EA5t c\u1EA3 k\u1EF9 n\u0103ng." },
-  { id: "item_leg_15", name: "Ph\u1EA7n Thi\xEAn Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 25e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 15", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c r\xE8n trong l\u1EEDa \u0111\u1ECBa t\xE2m, n\xF3ng r\u1EF1c nh\u01B0 mu\u1ED1n thi\xEAu \u0111\u1ED1t c\u1EA3 b\u1EA7u tr\u1EDDi.", story: "Ch\u1EC9 nh\u1EEFng ng\u01B0\u1EDDi c\xF3 linh c\u0103n h\u1ECFa m\u1EA1nh m\u1EBD m\u1EDBi c\xF3 th\u1EC3 ch\u1ECBu \u0111\u01B0\u1EE3c s\u1EE9c n\xF3ng c\u1EE7a n\xF3.", value: 2200 },
-  { id: "item_leg_16", name: "B\xEDch L\u1EA1c Ho\xE0ng Tuy\u1EC1n Ki\u1EBFm", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { defense: 28800, magicDefense: 11e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 16", description: "Thanh ki\u1EBFm mang \xFD c\u1EA3nh c\u1EE7a tr\u1EDDi xanh v\xE0 su\u1ED1i v\xE0ng, m\u1ED9t ki\u1EBFm c\xF3 th\u1EC3 quy\u1EBFt \u0111\u1ECBnh sinh t\u1EED.", story: "N\u1EAFm gi\u1EEF n\xF3 l\xE0 n\u1EAFm gi\u1EEF ranh gi\u1EDBi gi\u1EEFa s\u1EF1 s\u1ED1ng v\xE0 c\xE1i ch\u1EBFt.", value: 2250 },
-  { id: "item_leg_17", name: "T\u1EED Kim B\xE0o", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 27e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 17", description: "Chi\u1EBFc \xE1o b\xE0o m\xE0u t\xEDm v\xE0ng, bi\u1EC3u t\u01B0\u1EE3ng c\u1EE7a s\u1EF1 cao qu\xFD v\xE0 quy\u1EC1n l\u1EF1c.", story: "Ch\u1EC9 c\xF3 c\xE1c v\u1ECB t\xF4ng ch\u1EE7 ho\u1EB7c tr\u01B0\u1EDFng l\xE3o m\u1EDBi c\xF3 t\u01B0 c\xE1ch m\u1EB7c.", value: 2300 },
-  { id: "item_leg_18", name: "Long H\u1ED3n Ng\u1ECDc", type: "Ph\xE1p b\u1EA3o", rarity: "Truy\u1EC1n K\u1EF3", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDC09", stats: { hp: 6e4, attack: 5e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 18", description: "Vi\xEAn ng\u1ECDc ch\u1EE9a \u0111\u1EF1ng m\u1ED9t tia linh h\u1ED3n c\u1EE7a r\u1ED3ng th\u1EADt, mang l\u1EA1i s\u1EE9c m\u1EA1nh v\xE0 s\u1EF1 uy nghi\xEAm.", story: "Th\u1EC9nh tho\u1EA3ng c\xF3 th\u1EC3 nghe th\u1EA5y ti\u1EBFng r\u1ED3ng g\u1EA7m t\u1EEB b\xEAn trong.", value: 2350 },
-  { id: "item_leg_19", name: "Th\xE1i H\u01B0 Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { attack: 29e3, critRate: 10 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 19", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c l\xE0m t\u1EEB v\u1EADt li\u1EC7u c\u1EE7a kh\xF4ng gian h\u01B0 v\xF4, c\xF3 th\u1EC3 l\xE0m ch\u1EC7ch h\u01B0\u1EDBng c\xE1c \u0111\xF2n t\u1EA5n c\xF4ng.", story: "N\xF3 kh\xF4ng t\u1ED3n t\u1EA1i ho\xE0n to\xE0n trong th\u1EBF gi\u1EDBi n\xE0y.", value: 2400 },
-  { id: "item_leg_20", name: "H\u1ED7n \u0110\u1ED9n Chung", type: "Ph\xE1p b\u1EA3o", rarity: "Truy\u1EC1n K\u1EF3", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDD14", stats: { defense: 3e4, magicDefense: 12e3 }, requirement: "Tr\xFAc C\u01A1 T\u1EA7ng 20", description: "M\u1ED9t chi\u1EBFc chu\xF4ng nh\u1ECF c\xF3 th\u1EC3 t\u1EA1o ra s\xF3ng \xE2m h\u1ED7n lo\u1EA1n, tr\u1EA5n \xE1p v\u1EA1n v\u1EADt.", story: "L\xE0 m\u1ED9t trong nh\u1EEFng ph\xE1p b\u1EA3o ph\xF2ng ng\u1EF1 m\u1EA1nh nh\u1EA5t th\u1EDDi c\u1ED5 \u0111\u1EA1i.", value: 2450 },
-  { id: "item_leg_21", name: "Ma Long Ph\u1EC7 H\u1ED3n Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC32", stats: { defense: 15e5, magicDefense: 12e5, hp: 2e6 }, requirement: "Kim \u0110an K\u1EF3", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c r\xE8n t\u1EEB v\u1EA3y ng\u01B0\u1EE3c c\u1EE7a m\u1ED9t con Ma Long c\u1ED5 \u0111\u1EA1i. N\xF3 c\xF3 kh\u1EA3 n\u0103ng h\u1EA5p th\u1EE5 m\u1ED9t ph\u1EA7n linh h\u1ED3n c\u1EE7a k\u1EBB \u0111\u1ECBch b\u1ECB \u0111\xE1nh b\u1EA1i \u0111\u1EC3 t\u1EF1 h\u1ED3i ph\u1EE5c.", story: "Ti\u1EBFng g\u1EA7m c\u1EE7a Ma Long v\u1EABn c\xF2n v\u0103ng v\u1EB3ng b\xEAn tai ng\u01B0\u1EDDi m\u1EB7c n\xF3.", value: 25e3 },
-  { id: "item_leg_22", name: "Chu T\u01B0\u1EDBc Di\u1EC7m V\u0169 Phi\u1EBFn", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83E\uDEAD", stats: { magicAttack: 2e6, critRate: 15, critDamage: 50 }, requirement: "Kim \u0110an K\u1EF3", description: "Chi\u1EBFc qu\u1EA1t l\xE0m t\u1EEB l\xF4ng v\u0169 c\u1EE7a Chu T\u01B0\u1EDBc th\u1EA7n \u0111i\u1EC3u. M\u1ED7i c\xFA v\u1EABy qu\u1EA1t t\u1EA1o ra m\u1ED9t bi\u1EC3n l\u1EEDa thi\xEAu \u0111\u1ED1t v\u1EA1n v\u1EADt, \u0111\u1EB7c bi\u1EC7t hi\u1EC7u qu\u1EA3 v\u1EDBi k\u1EBB \u0111\u1ECBch h\u1EC7 M\u1ED9c.", story: "Ng\u1ECDn l\u1EEDa c\u1EE7a Chu T\u01B0\u1EDBc c\xF3 th\u1EC3 thi\xEAu \u0111\u1ED1t c\u1EA3 linh h\u1ED3n.", value: 26e3, effect: "C\xE1c \u0111\xF2n t\u1EA5n c\xF4ng c\xF3 hi\u1EC7u \u1EE9ng thi\xEAu \u0111\u1ED1t, g\xE2y th\xEAm s\xE1t th\u01B0\u01A1ng h\u1EC7 H\u1ECFa m\u1ED7i l\u01B0\u1EE3t." },
-  { id: "item_leg_23", name: "V\xF4 C\u1EF1c Tinh Th\u1EA7n B\xE0o", type: "\xC1o gi\xE1p", rarity: "Truy\u1EC1n K\u1EF3", slot: "\xE1o gi\xE1p", icon: "\u2728", stats: { mp: 15e5, evasion: 15, speed: 1e6 }, requirement: "Kim \u0110an K\u1EF3", description: "\xC1o b\xE0o \u0111\u01B0\u1EE3c d\u1EC7t t\u1EEB \xE1nh sao c\u1EE7a C\u1EEDu Thi\xEAn Ng\xE2n H\xE0. Ng\u01B0\u1EDDi m\u1EB7c n\xF3 c\xF3 th\u1EC3 di chuy\u1EC3n nh\u01B0 sao \u0111\u1ED5i ng\xF4i, n\xE9 tr\xE1nh c\xE1c \u0111\xF2n t\u1EA5n c\xF4ng m\u1ED9t c\xE1ch th\u1EA7n k\u1EF3.", story: "Ng\u01B0\u1EDDi ta n\xF3i r\u1EB1ng n\xF3 ch\u1EE9a \u0111\u1EF1ng s\u1EE9c m\u1EA1nh c\u1EE7a c\u1EA3 m\u1ED9t b\u1EA7u tr\u1EDDi sao.", value: 25500, effect: "T\u0103ng 2% t\u1ED1c \u0111\u1ED9 di chuy\u1EC3n ngo\xE0i chi\u1EBFn \u0111\u1EA5u." },
-  { id: "item_leg_24", name: "Ph\xE1 Gi\u1EDBi H\u01B0 Kh\xF4ng \u0110ao", type: "V\u0169 kh\xED", rarity: "Truy\u1EC1n K\u1EF3", slot: "v\u0169 kh\xED", icon: "\uD83C\uDF00", stats: { attack: 25e5, armorPen: 50 }, requirement: "Kim \u0110an K\u1EF3", description: "Thanh \u0111ao \u0111\u01B0\u1EE3c r\xE8n t\u1EEB m\u1EA3nh v\u1EE1 c\u1EE7a kh\xF4ng gian. L\u01B0\u1EE1i \u0111ao c\u1EE7a n\xF3 s\u1EAFc b\xE9n \u0111\u1EBFn m\u1EE9c c\xF3 th\u1EC3 c\u1EAFt xuy\xEAn qua c\u1EA3 ph\xE1p t\u1EAFc ph\xF2ng ng\u1EF1, b\u1ECF qua m\u1ED9t ph\u1EA7n l\u1EDBn gi\xE1p c\u1EE7a k\u1EBB \u0111\u1ECBch.", story: "M\u1ED7i nh\xE1t ch\xE9m \u0111\u1EC1u \u0111\u1EC3 l\u1EA1i m\u1ED9t v\u1EBFt n\u1EE9t kh\xF4ng gian nh\u1ECF.", value: 27e3 }
+  { id: "item_rar_20", name: "Linh Quy Gi\xE1p", type: "Ph\xE1p b\u1EA3o", rarity: "Qu\xFD", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDC8D", stats: { hp: 250 }, requirement: "C\u1EA5p 35", description: "M\u1ED9t chi\u1EBFc mai r\xF9a nh\u1ECF, \u0111\u01B0\u1EE3c kh\u1EAFc \u0111\u1EA7y ph\xF9 v\u0103n ph\xF2ng ng\u1EF1.", story: "L\xE0 b\xF9a h\u1ED9 m\u1EC7nh c\u1EE7a nh\u1EEFng ng\u01B0\u1EDDi hay \u0111i xa.", value: 340 }
 ];
 var MYTHIC_ITEMS = [
   { id: "item_myt_01", name: "H\u1ED7n \u0110\u1ED9n Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Th\u1EA7n Tho\u1EA1i", slot: "\xE1o gi\xE1p", icon: "\uD83C\uDF0C", stats: { defense: 25e4, magicDefense: 25e4, hp: 5e5 }, requirement: "Kim \u0110an K\u1EF3", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c sinh ra t\u1EEB kh\xED h\u1ED7n \u0111\u1ED9n s\u01A1 khai, v\u1EA1n ph\xE1p b\u1EA5t x\xE2m.", story: "M\u1EB7c n\xF3 v\xE0o, b\u1EA1n c\xF3 th\u1EC3 c\u1EA3m nh\u1EADn \u0111\u01B0\u1EE3c s\u1EF1 v\u1EADn h\xE0nh c\u1EE7a \u0111\u1EA1i \u0111\u1EA1o.", value: 1e4, effect: "H\u1EA5p th\u1EE5 m\u1ED9t ph\u1EA7n nh\u1ECF s\xE1t th\u01B0\u01A1ng nh\u1EADn v\xE0o v\xE0 chuy\u1EC3n h\xF3a th\xE0nh MP." },
@@ -687,20 +671,43 @@ var ALCHEMY_RECIPES = [
   { id: "recipe_001", name: "\u0110an T\u1EE5 Linh", inputs: [{ itemId: "mat_linh_chi", count: 2 }, { itemId: "mat_ngoc_dich", count: 1 }], outputId: "pill_tu_linh", requiredLevel: 1, expGain: 10, successChance: 0.8, level: 1, requiredCauldronLevel: 1 },
   { id: "recipe_002", name: "\u0110an Tr\u1ECB Th\u01B0\u01A1ng", inputs: [{ itemId: "mat_huyet_thao", count: 2 }, { itemId: "item_004", count: 1 }], outputId: "pill_tri_thuong", requiredLevel: 3, expGain: 15, successChance: 0.75, level: 1, requiredCauldronLevel: 1 }
 ];
-var BLACKSMITH_INVENTORY = [
-  { itemId: "item_com_02", price: 50 },
-  { itemId: "item_com_01", price: 45 },
-  { itemId: "upgrade_stone_1", price: 100 }
-];
-var CRAFTING_RECIPES = [
-  { inputs: ["item_005", "item_005"], output: "item_rar_01" }
-];
 
 // constants.ts
 var CULTIVATION_REALMS = ["Luy\u1EC7n Kh\xED", "Tr\xFAc C\u01A1", "Kim \u0110an", "Nguy\xEAn Anh", "H\xF3a Th\u1EA7n", "Luy\u1EC7n H\u01B0", "H\u1EE3p Th\u1EC3", "\u0110\u1ED9 Ki\u1EBFp", "\u0110\u1EA1i Th\u1EEBa", "Ch\xE2n Ti\xEAn", "Thi\xEAn Ti\xEAn", "Ti\xEAn V\u01B0\u01A1ng", "Ti\xEAn \u0110\u1EBF", "H\u1EADu Th\xE1nh V\u1ECB"];
 var REALM_BREAKTHROUGH_FLAT_BONUS = [10, 50, 100, 200, 300, 400, 600, 800, 1e3, 5e3, 8e3, 1e4, 12e3, 15e3];
 var REALM_BREAKTHROUGH_PERCENT_BONUS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5];
 var STAGE_PERCENT_BONUS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5];
+var ITEM_RARITY_COLORS = {
+  "Ph\u1ED5 th\xF4ng": "border-gray-400",
+  "Qu\xFD": "border-green-500",
+  "Hi\u1EBFm": "border-blue-500",
+  "Truy\u1EC1n K\u1EF3": "border-orange-500",
+  "Th\u1EA7n Tho\u1EA1i": "border-red-600",
+  "T\u1ED1i Th\u01B0\u1EE3ng": "border-purple-500 animate-pulse"
+};
+var ITEM_RARITY_TEXT_COLORS = {
+  "Ph\u1ED5 th\xF4ng": "text-white",
+  "Qu\xFD": "text-green-400",
+  "Hi\u1EBFm": "text-blue-400",
+  "Truy\u1EC1n K\u1EF3": "text-orange-400",
+  "Th\u1EA7n Tho\u1EA1i": "text-red-500",
+  "T\u1ED1i Th\u01B0\u1EE3ng": "text-purple-400"
+};
+var COMBAT_STAT_LABELS = {
+  attack: "C\xF4ng K\xEDch",
+  magicAttack: "Ph\xE1p C\xF4ng",
+  defense: "Ph\xF2ng Ng\u1EF1",
+  magicDefense: "Kh\xE1ng Ph\xE9p",
+  critRate: "T\u1EC9 L\u1EC7 Ch\xED M\u1EA1ng",
+  critDamage: "S.Th\u01B0\u01A1ng Ch\xED M\u1EA1ng",
+  accuracy: "Ch\xEDnh X\xE1c",
+  evasion: "N\xE9 Tr\xE1nh",
+  speed: "T\u1ED1c \u0110\u1ED9",
+  armorPen: "Xuy\xEAn Gi\xE1p",
+  blockRate: "T\u1EC9 L\u1EC7 Ch\u1EB7n",
+  mentalDemonResistance: "Kh\xE1ng T\xE2m Ma",
+  luck: "May M\u1EAFn"
+};
 
 // data/mainStoryQuests.ts
 var MAIN_STORY_QUESTS = [
@@ -745,4 +752,262 @@ var MAIN_STORY_QUESTS = [
     id: "sq_04",
     isStoryQuest: true,
     title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (4)",
-    description: "M\u1ED9t \u0111\u1EA1o s\u0129 lang thang t\u1EA1i Th\xE0nh V\xE2
+    description: "M\u1ED9t \u0111\u1EA1o s\u0129 lang thang t\u1EA1i Th\xE0nh V\xE2n L\xE2m n\xF3i r\u1EB1ng \xF4ng ta c\xF3 tin t\u1EE9c v\u1EC1 cha c\u1EE7a b\u1EA1n. \xD4ng ta n\xF3i b\u1EA1n ph\u1EA3i ch\u1EE9ng minh th\u1EF1c l\u1EF1c b\u1EB1ng c\xE1ch \u0111\xE1nh b\u1EA1i H\u1EAFc Lang V\u01B0\u01A1ng \u0111ang ho\xE0nh h\xE0nh g\u1EA7n \u0111\xF3.",
+    progress: 0,
+    target: 1,
+    objective: { type: "kill", targetName: "H\u1EAFc Lang V\u01B0\u01A1ng", targetId: "monster_story_001" },
+    reward: "1200 EXP, 1x V\xE9 Th\xF4ng H\xE0nh",
+    rewardObject: { characterExp: 1200, itemId: "item_story_005" },
+    nextQuestId: "sq_05"
+  },
+  {
+    id: "sq_05",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (5)",
+    description: "V\u1EDBi v\xE9 th\xF4ng h\xE0nh, b\u1EA1n c\xF3 th\u1EC3 tham gia k\u1EF3 thi nh\u1EADp m\xF4n c\u1EE7a T\xF4ng m\xF4n Thanh V\xE2n. H\xE3y v\u01B0\u1EE3t qua th\u1EED th\xE1ch \u0111\u1EC3 b\u01B0\u1EDBc ch\xE2n v\xE0o con \u0111\u01B0\u1EDDng tu ti\xEAn th\u1EF1c s\u1EF1.",
+    progress: 0,
+    target: 3,
+    objective: { type: "kill", targetName: "\u0110\u1EC7 T\u1EED \u0110\u1ED1i Th\u1EE7", targetId: "monster_story_002" },
+    reward: "1500 EXP, 1x Kh\xED V\u1EADn T\xF4ng M\xF4n",
+    rewardObject: { characterExp: 1500, itemId: "item_story_006" },
+    nextQuestId: "sq_06"
+  },
+  {
+    id: "sq_06",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (6)",
+    description: "Tr\u01B0\u1EDFng l\xE3o giao cho b\u1EA1n nhi\u1EC7m v\u1EE5 \u0111i\u1EC1u tra ma kh\xED b\u1EA5t th\u01B0\u1EDDng t\u1EA1i V\u1EF1c Linh Tr\xEC. D\u01B0\u1EDDng nh\u01B0 c\xF3 m\u1ED9t th\u1EF1c th\u1EC3 h\u1EAFc \xE1m \u0111ang \u1EA9n n\u1EA5u \u1EDF \u0111\xF3.",
+    progress: 0,
+    target: 1,
+    objective: { type: "kill", targetName: "Ma \u1EA2nh Linh H\u1ED3n", targetId: "monster_story_003" },
+    reward: "2500 EXP, 1x B\xECnh T\u1EA9y Ma",
+    rewardObject: { characterExp: 2500, itemId: "item_story_007" },
+    nextQuestId: "sq_07"
+  },
+  {
+    id: "sq_07",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (7)",
+    description: "B\u1EA1n ph\xE1t hi\u1EC7n ra m\u1ED9t m\u1ED1i li\xEAn h\u1EC7 gi\u1EEFa ma kh\xED v\xE0 huy\u1EBFt m\u1EA1ch c\u1EE7a m\xECnh. H\xE3y \u0111\u1EBFn Di t\xEDch B\xE0n C\u1ED5 \u0111\u1EC3 t\xECm ki\u1EBFm Linh Huy\u1EBFt B\xE0n C\u1ED5, hy v\u1ECDng n\xF3 c\xF3 th\u1EC3 gi\xFAp b\u1EA1n th\u1EE9c t\u1EC9nh s\u1EE9c m\u1EA1nh th\u1EF1c s\u1EF1.",
+    progress: 0,
+    target: 1,
+    objective: { type: "collect", targetName: "Linh Huy\u1EBFt B\xE0n C\u1ED5", itemId: "item_story_008" },
+    reward: "4000 EXP, Th\u1EE9c T\u1EC9nh Huy\u1EBFt M\u1EA1ch",
+    rewardObject: { characterExp: 4e3 },
+    storyTriggers: { type: "AWAKEN_BLOODLINE" },
+    turnInItems: [{ itemId: "item_story_008", count: 1 }],
+    nextQuestId: "sq_08"
+  },
+  {
+    id: "sq_08",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (8)",
+    description: "Sau khi th\u1EE9c t\u1EC9nh huy\u1EBFt m\u1EA1ch, b\u1EA1n g\u1EB7p m\u1ED9t ng\u01B0\u1EDDi t\u1EF1 x\u01B0ng l\xE0 b\u1EA1n c\u0169 c\u1EE7a cha. Ng\u01B0\u1EDDi n\xE0y \u0111\u01B0a cho b\u1EA1n hai con \u0111\u01B0\u1EDDng: theo \u0111u\u1ED5i ch\xEDnh \u0111\u1EA1o \u0111\u1EC3 b\u1EA3o v\u1EC7 th\u1EBF gian, ho\u1EB7c nh\u1EADp ma \u0111\u1EA1o \u0111\u1EC3 c\xF3 s\u1EE9c m\u1EA1nh v\xF4 song. V\u1EADn m\u1EC7nh n\u1EB1m trong tay b\u1EA1n.",
+    progress: 0,
+    target: 1,
+    objective: { type: "event", targetName: "\u0110\u01B0a ra l\u1EF1a ch\u1ECDn Ch\xEDnh - Ma" },
+    reward: "Nh\xE1nh truy\u1EC7n Ch\xEDnh \u0110\u1EA1o / Ma \u0110\u1EA1o",
+    storyTriggers: { type: "CHOOSE_PATH" },
+    nextQuestId: "sq_09"
+  },
+  {
+    id: "sq_09",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (9)",
+    description: "Con \u0111\u01B0\u1EDDng b\u1EA1n ch\u1ECDn \u0111\xF²i h\u1ECFi s\u1EE9c m\u1EA1nh l\u1EDBn h\u01A1n. \u0110\u1EC3 \u0111\u1ED9t ph\xE1 c\u1EA3nh gi\u1EDBi v\xE0 b\u01B0\u1EDBc v\xE0o Ti\xEAn Gi\u1EDBi, b\u1EA1n ph\u1EA3i \u0111\u1ED1i m\u1EB7t v\u1EDBi L\xF4i Ki\u1EBFp c\u1EE7a Thi\xEAn \u0110\u1EA1o. H\xE3y chu\u1EA9n b\u1ECB v\xE0 s\u1ED1ng s\xF3t.",
+    progress: 0,
+    target: 3,
+    objective: { type: "kill", targetName: "L\xF4i Ki\u1EBFp", targetId: "monster_story_006" },
+    reward: "8000 EXP, L\xF4i T\xE2m Gi\u1EDBi Th\u1EC3",
+    rewardObject: { characterExp: 8e3, itemId: "item_story_009" },
+    nextQuestId: "sq_10"
+  },
+  {
+    id: "sq_10",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (10)",
+    description: "Khi b\u01B0\u1EDBc v\xE0o Ti\xEAn Gi\u1EDBi, b\u1EA1n ph\xE1t hi\u1EC7n ra L\xF4i Ki\u1EBFp kh\xF4ng ph\u1EA3i l\xE0 th\u1EED th\xE1ch t\u1EF1 nhi\xEAn, m\xE0 l\xE0 m\u1ED9t \xE2m m\u01B0u c\u1EE7a Thi\xEAn \u0110\u1EA1o nh\u1EB1m ng\u0103n ch\u1EB7n nh\u1EEFng k\u1EBB c\xF3 huy\u1EBFt m\u1EA1ch nh\u01B0 b\u1EA1n. H\xE3y t\xECm v\xE0 \u0111\xE1nh b\u1EA1i ph\xE2n th\xE2n c\u1EE7a Thi\xEAn T\xF4n \u0111\u1EC3 v\u1EA1ch tr\u1EA7n s\u1EF1 th\u1EADt.",
+    progress: 0,
+    target: 1,
+    objective: { type: "kill", targetName: "Thi\xEAn T\xF4n Ph\xE2n Th\xE2n", targetId: "monster_story_004" },
+    reward: "10000 EXP, Thi\xEAn M\u1EC7nh Ph\xF9",
+    rewardObject: { characterExp: 1e4, itemId: "item_story_010" },
+    nextQuestId: "sq_11"
+  },
+  {
+    id: "sq_11",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (11)",
+    description: "Thi\xEAn \u0110\u1EA1o l\xE0 k\u1EBB th\xF9 chung. B\u1EA1n ph\u1EA3i thuy\u1EBFt ph\u1EE5c c\xE1c th\u1EBF l\u1EF1c trong Ti\xEAn Gi\u1EDBi v\xE0 Ma Gi\u1EDBi \u0111\u1EC3 l\u1EADp n\xEAn m\u1ED9t li\xEAn minh ch\u1ED1ng l\u1EA1i s\u1EF1 cai tr\u1ECB \u0111\u1ED9c \u0111o\xE1n n\xE0y. S\u1EBD c\xF3 k\u1EBB ch\u1ED1ng \u0111\u1ED1i, h\xE3y d\xF9ng th\u1EF1c l\u1EF1c \u0111\u1EC3 khi\u1EBFn ch\xFAng quy ph\u1EE5c.",
+    progress: 0,
+    target: 1,
+    objective: { type: "event", targetName: "Ho\xE0n th\xE0nh \u0111\xE0m ph\xE1n li\xEAn minh" },
+    reward: "15000 EXP, Danh hi\u1EC7u [Ph\xE1 Thi\xEAn]",
+    rewardObject: { characterExp: 15e3 },
+    storyTriggers: { type: "GAIN_TITLE", value: "Ph\xE1 Thi\xEAn" },
+    nextQuestId: "sq_12"
+  },
+  {
+    id: "sq_12",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (12)",
+    description: "Li\xEAn minh \u0111\xE3 \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp, nh\u01B0ng \u0111\u1EC3 th\u1EF1c s\u1EF1 \u0111\u1ED1i \u0111\u1EA7u v\u1EDBi Thi\xEAn \u0110\u1EA1o, b\u1EA1n c\u1EA7n t\xECm ra \u0111i\u1EC3m y\u1EBFu c\u1EE7a ch\xFAng. B\u1EA1ch Y Ti\xEAn T\u1EED t\u1EA1i Thi\xEAn Cung ti\u1EBFt l\u1ED9 v\u1EC1 'La B\xE0n Huy\u1EC5n C\u1EA3nh', ch\xECa kh\xF3a \u0111\u1EC3 v\xE0o n\u01A1i c\u1EA5t gi\u1EEF b\xED m\u1EADt, nh\u01B0ng n\xF3 \u0111ang \u0111\u01B0\u1EE3c m\u1ED9t 'Thi\xEAn Cung V\u1EC7 Th\u1EA7n' canh gi\u1EEF.",
+    progress: 0,
+    target: 1,
+    objective: { type: "kill", targetName: "Thi\xEAn Cung V\u1EC7 Th\u1EA7n", targetId: "monster_story_007" },
+    reward: "30000 EXP, 1x La B\xE0n Huy\u1EC5n C\u1EA3nh",
+    rewardObject: { characterExp: 3e4, itemId: "item_story_013" },
+    nextQuestId: "sq_13"
+  },
+  {
+    id: "sq_13",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (13)",
+    description: "V\u1EDBi La B\xE0n Huy\u1EC5n C\u1EA3nh trong tay, b\u1EA1n c\xF3 th\u1EC3 ti\u1EBFn v\xE0o Huy\u1EC5n C\u1EA3nh Lu\xE2n H\u1ED3i \u0111\u1EC3 t\xECm l\u1EA1i linh h\u1ED3n t\u1ED5 ti\xEAn. Nh\u01B0ng \u0111\u1EC3 l\xE0m v\u1EADy, b\u1EA1n ph\u1EA3i \u0111\u1ED1i m\u1EB7t v\u1EDBi T\xE2m Ma D\u0129 V\xE3ng c\u1EE7a ch\xEDnh m\xECnh, th\u1EE9 \u0111\u01B0\u1EE3c sinh ra t\u1EEB nh\u1EEFng h\u1ED1i ti\u1EBFc v\xE0 m\u1EA5t m\xE1t.",
+    progress: 0,
+    target: 1,
+    objective: { type: "kill", targetName: "T\xE2m Ma D\u0129 V\xE3ng", targetId: "monster_story_005" },
+    reward: "20000 EXP, \u1EA4n Gia T\u1ED9c Ph\u1EE5c Sinh",
+    rewardObject: { characterExp: 2e4, itemId: "item_story_011" },
+    turnInItems: [{ itemId: "item_story_013", count: 1 }],
+    nextQuestId: "sq_14"
+  },
+  {
+    id: "sq_14",
+    isStoryQuest: true,
+    title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (14)",
+    description: "V\u1EDBi \u1EA4n Gia T\u1ED9c trong tay, b\u1EA1n \u0111\xE3 c\xF3 th\u1EC3 th\u1EF1c hi\u1EC7n nghi l\u1EC5 cu\u1ED1i c\xF9ng \u0111\u1EC3 h\u1ED3i sinh ho\xE0n to\xE0n s\u1EE9c m\u1EA1nh c\u1EE7a d\xF2ng huy\u1EBFt m\u1EA1ch, kh\xF4i ph\u1EE5c l\u1EA1i vinh quang cho gia t\u1ED9c. \u0110\xE2y l\xE0 b\u01B0\u1EDBc cu\u1ED1i c\xF9ng tr\xEAn con \u0111\u01B0\u1EDDng c\u1EE7a b\u1EA1n.",
+    progress: 0,
+    target: 1,
+    objective: { type: "event", targetName: "Th\u1EF1c hi\u1EC7n nghi l\u1EC5 ph\u1EE5c sinh" },
+    reward: "Th\u1EA7n Huy\u1EBFt B\u1EA5t Di\u1EC7t, Danh hi\u1EC7u [Gia T\u1ED9c B\u1EA5t Di\u1EC7t]",
+    rewardObject: { itemId: "item_story_012" },
+    storyTriggers: { type: "GAIN_TITLE", value: "Gia T\u1ED9c B\u1EA5t Di\u1EC7t" },
+    turnInItems: [{ itemId: "item_story_011", count: 1 }],
+    nextQuestId: "sq_15"
+  },
+  {
+    id: "sq_15",
+    isStoryQuest: true,
+    title: "Th\u1EA7n Long Chi V\u1EA5n",
+    description: "S\u1EE9c m\u1EA1nh c\u1EE7a b\u1EA1n \u0111\xE3 kinh \u0111\u1ED9ng \u0111\u1EBFn c\u1EA3 nh\u1EEFng t\u1ED3n t\u1EA1i c\u1ED5 x\u01B0a nh\u1EA5t. M\u1ED9t l\u1EDDi m\u1EDDi t\u1EEB Long \u0110i\u1EC7n \u1EDF trung t\xE2m Th\u1EA7n Gi\u1EDBi \u0111\xE3 \u0111\u01B0\u1EE3c g\u1EEDi \u0111\u1EBFn. H\xE3y \u0111\u1EBFn di\u1EC7n ki\u1EBFn Ch\xFAng Long Chi Ch\u1EE7, B\u1EA1ch Thi\xEAn Huy\xEAn, \u0111\u1EC3 ch\u1EE9ng t\u1ECF th\u1EF1c l\u1EF1c c\u1EE7a b\u1EA1n v\xE0 t\xECm hi\u1EC3u b\xED m\u1EADt cu\u1ED1i c\xF9ng c\u1EE7a th\u1EBF gi\u1EDBi n\xE0y.",
+    progress: 0,
+    target: 1,
+    objective: { type: "kill", targetName: "B\u1EA1ch Thi\xEAn Huy\xEAn", targetId: "monster_boss_bth" },
+    reward: "Truy\u1EC1n th\u1EEBa S\u01A1 Th\u1EE7y Th\xE1nh Long",
+    rewardObject: { characterExp: 1e5, cultivationExp: 1e5 },
+    nextQuestId: null
+  }
+];
+
+// data/worldMapData.ts
+var WORLD_MAP_DATA = [
+  {
+    id: "realm_pham_gioi",
+    name: "Ph\xE0m Gi\u1EDBi",
+    description: "L\xE0 n\u01A1i kh\u1EDFi \u0111\u1EA7u, sinh s\u1ED1ng c\u1EE7a ng\u01B0\u1EDDi th\u01B0\u1EDDng, \xEDt linh kh\xED, t\xE0i nguy\xEAn ngh\xE8o n\xE0n nh\u01B0ng c\xF3 nhi\u1EC1u c\xE2u chuy\u1EC7n m\u1EDF \u0111\u1EA7u.",
+    levelRange: "1-40",
+    areas: [
+      {
+        id: "area_thanh_thuy",
+        name: "Th\xF4n Thanh Th\u1EE7y",
+        description: "L\xE0ng kh\u1EDFi \u0111\u1EA7u \u2013 n\u01A1i nh\xE2n v\u1EADt ch\xEDnh l\u1EDBn l\xEAn. Giao di\u1EC7n c\u01A1 b\u1EA3n, nhi\u1EC7m v\u1EE5 h\u01B0\u1EDBng d\u1EABn.",
+        levelRange: "1-5",
+        npcs: ["Tr\u01B0\u1EDFng th\xF4n", "Th\u1EA7y thu\u1ED1c", "Th\u1EE3 r\xE8n"],
+        monsters: ["C\u1ECDc g\u1ED7", "Chu\u1ED9t \u0110\xF3i", "Ch\xF3 Hoang"],
+        boss: "Chu\u1ED9t Tinh Bi\u1EBFn D\u1ECB",
+        rewards: ["Nguy\xEAn li\u1EC7u c\u01A1 b\u1EA3n", "Trang b\u1ECB ph\xE0m nh\xE2n", "\u0110an d\u01B0\u1EE3c c\u1EA5p th\u1EA5p"],
+        possibleWeather: ["Tr\u1EDDi Quang", "M\u01B0a R\xE0o"]
+      },
+      {
+        id: "area_van_lam",
+        name: "Th\xE0nh V\xE2n L\xE2m",
+        description: "Th\xE0nh l\u1EDBn, trung t\xE2m giao th\u01B0\u01A1ng. C\xF3 nhi\u1EC1u NPC, n\u01A1i nh\u1EADn nhi\u1EC7m v\u1EE5, luy\u1EC7n \u0111an, giao d\u1ECBch.",
+        levelRange: "5-15",
+        npcs: ["Th\u01B0\u01A1ng nh\xE2n", "Quan binh", "\u0110\u1EA1o s\u0129 lang thang", "Y\u1EBFn T\u1EED Nguy\u1EC7t"],
+        monsters: ["Kh\xF4ng c\xF3 (th\xE0nh an to\xE0n)"],
+        rewards: ["V\u1EADt ph\u1EA9m giao d\u1ECBch", "B\xED k\xEDp s\u01A1 c\u1EA5p", "B\u1EA3n \u0111\u1ED3 khu v\u1EF1c"],
+        possibleWeather: ["Tr\u1EDDi Quang"]
+      },
+      {
+        id: "area_me_anh",
+        name: "R\u1EEBng M\xEA \u1EA2nh",
+        description: "Khu r\u1EEBng nguy hi\u1EC3m \u0111\u1EA7u ti\xEAn \u2013 c\xF3 y\xEAu th\xFA, k\u1EF3 th\u1EA3o, ph\u1EE5 b\u1EA3n c\u1EA5p th\u1EA5p.",
+        levelRange: "10-20",
+        npcs: ["Ti\u1EC1u phu l\u1EA1c \u0111\u01B0\u1EDDng", "Y\xEAu linh nh\u1ECF"],
+        monsters: ["Nh\u1EC7n \u0110\u1ED9c", "H\u1ED5 V\u1EB1n L\u1EEDa R\u1EEBng"],
+        boss: "H\u1ED5 V\u01B0\u01A1ng M\xEA \u1EA2nh",
+        rewards: ["Linh th\u1EA3o c\u1EA5p th\u1EA5p", "Da th\xFA", "Ph\xE1p b\u1EA3o s\u01A1 c\u1EA5p"],
+        possibleWeather: ["Tr\u1EDDi Quang", "S\u01B0\u01A1ng M\xF9", "M\u01B0a R\xE0o"]
+      },
+      {
+        id: "area_hang_da",
+        name: "Hang \u0110\xE1 T\u1ED1i",
+        description: "B\xED c\u1EA3nh \u1EA9n d\u01B0\u1EDBi n\xFAi \u2013 luy\u1EC7n kh\xED nh\xE2n t\u1EA1o, c\xF3 boss \u0111\u1EA7u ti\xEAn.",
+        levelRange: "20-25",
+        npcs: ["\u1EA8n s\u0129"],
+        monsters: ["D\u01A1i M\xE1u", "Linh Th\u1EA1ch Nh\xE2n"],
+        boss: "Vua D\u01A1i H\xFAt M\xE1u",
+        rewards: ["Trang b\u1ECB lam", "C\xF4ng ph\xE1p nh\u1EADp m\xF4n", "Th\xFA c\u01B0\u1EE1i c\u1EA5p th\u1EA5p"]
+      },
+      {
+        id: "area_tich_duong",
+        name: "\u0110\u1EC9nh T\u1ECBch D\u01B0\u01A1ng",
+        description: "N\u01A1i ng\u1EAFm ho\xE0ng h\xF4n \u2013 c\xF3 NPC b\xED \u1EA9n, l\u1EA7n \u0111\u1EA7u ti\xEAn nh\u1EAFc \u0111\u1EBFn 'tu ti\xEAn'.",
+        levelRange: "25-30",
+        npcs: ["Ti\xEAn gi\u1EA3 b\xED \u1EA9n"],
+        monsters: [],
+        rewards: ["C\u01A1 duy\xEAn hi\u1EBFm: ng\u1ED9 t\xEDnh +1", "Ph\xE1p kh\xED \u0111\u1EA7u ti\xEAn"],
+        possibleWeather: ["Tr\u1EDDi Quang", "N\u1EAFng G\u1EAFt"]
+      },
+      {
+        id: "area_linh_thu_sam_lam",
+        name: "Linh Th\xFA S\xE2m L\xE2m",
+        description: "N\u01A1i \u1EA9n n\u1EA5u c\u1EE7a c\xE1c Linh Th\xFA c\u1ED5 \u0111\u1EA1i.",
+        levelRange: "25-40",
+        npcs: ["Th\u1EA7n Th\xFA L\xE3o gi\u1EA3"],
+        monsters: ["Y\xEAu Th\xFA Tinh Linh"],
+        boss: "H\u1ED9 V\u1EC7 Th\u1EE5 Tinh",
+        rewards: ["Linh h\u1ED3n th\xFA", "N\u1ED9i \u0111an y\xEAu th\xFA"],
+        possibleWeather: ["Tr\u1EDDi Quang", "S\u01B0\u01A1ng M\xF9", "M\u01B0a R\xE0o"]
+      }
+    ]
+  },
+  {
+    id: "realm_tu_chan_gioi",
+    name: "Tu Ch\xE2n Gi\u1EDBi",
+    description: "N\u01A1i c\xE1c tu s\u0129 ho\u1EA1t \u0111\u1ED9ng, linh kh\xED d\xE0y \u0111\u1EB7c, c\xF3 nhi\u1EC1u t\xF4ng m\xF4n, y\xEAu th\xFA, di t\xEDch c\u1ED5 x\u01B0a. N\u01A1i b\u1EAFt \u0111\u1EA7u con \u0111\u01B0\u1EDDng tu ti\xEAn th\u1EF1c s\u1EF1.",
+    levelRange: "30-80",
+    areas: [
+      { id: "area_thanh_van", name: "T\xF4ng m\xF4n Thanh V\xE2n", description: "Ch\xEDnh ph\xE1i l\u1EDBn \u2013 c\xF3 th\u1EC3 gia nh\u1EADp, h\u1ECDc ph\xE1p thu\u1EADt, nh\u1EADn nhi\u1EC7m v\u1EE5 t\xF4ng m\xF4n.", levelRange: "30-50", boss: "H\u1ED9 S\u01A1n K\u1EF3 L\xE2n", possibleWeather: ["Tr\u1EDDi Quang", "M\u01B0a R\xE0o"] },
+      { id: "area_van_yeu_son", name: "V\u1EA1n Y\xEAu S\u01A1n", description: "N\xFAi y\xEAu th\xFA c\u01B0 ng\u1EE5 \u2013 b\u1EAFt linh th\xFA, thu ph\u1EE5c, hu\u1EA5n luy\u1EC7n.", levelRange: "40-60", monsters: ["H\u1ED3 Linh", "Lang V\u01B0\u01A1ng", "Th\u1EE7y X\xE0"], boss: "V\u1EA1n Y\xEAu V\u01B0\u01A1ng", possibleWeather: ["Tr\u1EDDi Quang", "S\u01B0\u01A1ng M\xF9"] },
+      { id: "area_linh_tri", name: "V\u1EF1c Linh Tr\xEC", description: "H\u1ED3 ch\u1EE9a linh kh\xED \u2013 t\u0103ng t\u1ED1c tu luy\u1EC7n, c\xF3 boss canh gi\u1EEF.", levelRange: "50-70", monsters: ["Tinh Linh Th\u1EE7y N\u1EEF"], boss: "Th\u1EE7y M\u1EABu Th\xE1nh N\u1EEF" },
+      { id: "area_ma_vuc", name: "Th\xE0nh Ma V\u1EF1c", description: "N\u01A1i ma tu t\u1EE5 t\u1EADp \u2013 PvP t\u1EF1 do, k\u1ECBch b\u1EA3n ph\u1EA3n di\u1EC7n m\u1EA1nh.", levelRange: "60-80", boss: "Ma So\xE1i H\u1EAFc \xC1m", possibleWeather: ["Tr\u1EDDi Quang", "N\u1EAFng G\u1EAFt"] },
+      { id: "area_ban_co", name: "Di t\xEDch B\xE0n C\u1ED5", description: "Di t\xEDch c\u1ED5 \u2013 xu\u1EA5t hi\u1EC7n k\u1EF3 ng\u1ED9, b\u1EA3o v\u1EADt, \u1EA9n ch\u1EE9a nguy hi\u1EC3m c\u1EF1c l\u1EDBn.", levelRange: "70+", monsters: ["L\xF4i Linh Nh\xE2n"], boss: "C\u1EF1 Th\u1EA7n B\xE0n C\u1ED5 T\xE0n H\u1ED3n", possibleWeather: ["Tr\u1EDDi Quang", "B\xE3o T\u1ED1"] }
+    ]
+  },
+  {
+    id: "realm_tien_gioi",
+    name: "Ti\xEAn Gi\u1EDBi",
+    description: "Ch\u1EC9 ng\u01B0\u1EDDi v\u01B0\u1EE3t \u0110\u1ED9 Ki\u1EBFp m\u1EDBi c\xF3 th\u1EC3 \u0111\u1EB7t ch\xE2n t\u1EDBi. Th\u1EBF gi\u1EDBi th\u1EA7n th\xE1nh, m\u1ED7i khu v\u1EF1c \u0111\u1EC1u c\xF3 thi\xEAn \u0111\u1EA1o gi\xE1m s\xE1t.",
+    levelRange: "80-150",
+    areas: [
+      { id: "area_thien_cung", name: "Thi\xEAn Cung", description: "Trung t\xE2m c\u1EE7a Ti\xEAn gi\u1EDBi \u2013 NPC thi\xEAn t\u01B0\u1EDBng, b\u1EA3ng x\u1EBFp h\u1EA1ng ti\xEAn \u0111\u1ED3.", levelRange: "80-100", npcs: ["Thi\xEAn t\u01B0\u1EDBng", "B\u1EA1ch Y Ti\xEAn T\u1EED"], possibleWeather: ["Tr\u1EDDi Quang"] },
+      { id: "area_ngoc_hu", name: "Ng\u1ECDc H\u01B0 C\u1EA3nh", description: "C\u1EA3nh gi\u1EDBi tu luy\u1EC7n c\u1EF1c nhanh \u2013 c\u1EA7n \u0111i\u1EC1u ki\u1EC7n cao \u0111\u1EC3 v\xE0o.", levelRange: "90+" },
+      { id: "area_thien_loi", name: "Thi\xEAn L\xF4i V\u1EF1c", description: "N\u01A1i r\xE8n luy\u1EC7n \u0111\u1ED9 ki\u1EBFp \u2013 boss L\xF4i Th\u1EA7n, y\xEAu c\u1EA7u \u0111\u1ED9i nh\xF3m m\u1EA1nh.", levelRange: "100+", monsters: ["L\xF4i \u0110i\u1EC3u"], possibleWeather: ["B\xE3o T\u1ED1"] },
+      { id: "area_linh_dien", name: "Linh \u0110i\u1EC7n C\u1EEDu Tr\u1ECDng", description: "9 t\u1EA7ng th\xE1p th\u1EED th\xE1ch \u2013 v\u01B0\u1EE3t c\xE0ng cao ph\u1EA7n th\u01B0\u1EDFng c\xE0ng l\u1EDBn.", levelRange: "110+", monsters: ["Linh H\u1EA7u C\u1ED5"] },
+      { id: "area_van_mong", name: "\u0110\u1EA3o V\xE2n M\u1ED9ng", description: "Khu v\u1EF1c th\u01B0 gi\xE3n, c\xE2u c\xE1, h\u1EB9n h\xF2 \u0111\u1EA1o l\u1EEF, m\u1EDF kh\xF3a k\u1EF9 n\u0103ng \u0111\xF4i.", levelRange: "120+", possibleWeather: ["Tr\u1EDDi Quang", "M\u01B0a R\xE0o"] },
+      { id: "area_than_moc", name: "Th\u1EA7n M\u1ED9c Vi\u1EC5n C\u1ED5", description: "\u0110\u1EA1i th\u1EE5 c\u1ED5 \u2013 ch\u1EE9a \u0111\u1EF1ng truy\u1EC1n th\u1EEBa Ti\xEAn Nh\xE2n th\u1EA5t l\u1EA1c.", levelRange: "130+", monsters: ["C\u1EF1 M\u1ED9c H\u1ED9 V\u1EC7"] }
+    ]
+  },
+  {
+    id: "realm_ma_gioi",
+    name: "Ma Gi\u1EDBi",
+    description: "C\xF3 th\u1EC3 song song t\u1ED3n t\u1EA1i v\u1EDBi Ti\xEAn gi\u1EDBi. B\u1ECB thi\xEAn \u0111\u1EA1o khinh th\u01B0\u1EDDng, nh\u01B0ng l\u1EA1i ch\u1EE9a s\u1EE9c m\u1EA1nh c\u1EA5m k\u1EF5.",
+    levelRange: "120+",
+    areas: [
+      { id: "area_hac_phong", name: "H\u1EAFc Phong Tr\xEC", description: "Linh kh\xED \xE2m t\xE0 \u2013 luy\u1EC7n ma c\xF4ng, ch\u1EBF t\u1EA1o ph\xE1p b\u1EA3o t\xE0n \u0111\u1ED9c.", levelRange: "120+", monsters: ["Qu\u1EF7 Huy\u1EBFt N\xF4"] },
+      { id: "area_huyet_hai", name: "Huy\u1EBFt H\u1EA3i V\xF4 Bi\xEAn", description: "Bi\u1EC3n m\xE1u \u2013 m\u1ED7i l\u1EA7n ch\u1EBFt \u1EDF \u0111\xE2y s\u1EBD t\u0103ng 's\xE1t kh\xED', m\u1EDF kh\xF3a k\u1EF9 n\u0103ng ma \u0111\u1EA1o.", levelRange: "130+", monsters: ["Ma Ng\u01B0"] },
+      { id: "area_phong_an", name: "Phong \u1EA4n C\u1ED5 T\xF4ng", description: "Di t\xEDch ma t\xF4ng \u2013 b\u1ECB phong \u1EA5n, c\u1EA7n ph\xE1 gi\u1EA3i \u0111\u1EC3 nh\u1EADn truy\u1EC1n th\u1EEBa.", levelRange: "140+", monsters: ["U Linh Qu\xE2n"] },
+      { id: "area_co_mo", name: "C\u1ED5 M\u1ED9 U Linh", description: "Khu m\u1ED9 c\u1EE7a ma th\u1EA7n \u2013 boss m\u1EA1nh, t\u1EF7 l\u1EC7 r\u1EDBt \u0111\u1ED3 truy\u1EC1n thuy\u1EBFt cao.", levelRange: "150+", monsters: ["Ma Th\u1EA7n B\u1EA5t T\u1EED"] },
+      { id: "area_ma_de", name: "L\xE3nh \u0110\u1ECBa Ma \u
