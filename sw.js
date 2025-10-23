@@ -51,7 +51,6 @@ const urlsToCache = [
   './components/AdventurePanel.tsx',
   './components/LinhDiaExplorationPanel.tsx',
   './App.tsx',
-  'https://cdn.tailwindcss.com',
   'https://img.freepik.com/free-photo/glowing-spaceship-orbits-planet-starry-galaxy-generated-by-ai_188544-9655.jpg'
 ];
 

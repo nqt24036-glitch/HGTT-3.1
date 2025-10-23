@@ -180,18 +180,18 @@ export const generateQuest = async (npc: string, area: WorldMapArea, player: Pla
   1.  **Nội dung**: Tạo một nhiệm vụ phù hợp với bối cảnh. Lời thoại của NPC (${npc}) phải được tích hợp vào phần mô tả nhiệm vụ.
   2.  **Loại nhiệm vụ**: Dựa vào bối cảnh, hãy chọn một loại nhiệm vụ từ danh sách sau: ${questTypesString}. Đừng tạo nhiệm vụ loại 'kill' nếu không có yêu thú, 'collect' nếu không có vật phẩm, hoặc 'talk' nếu không có NPC khác.
   3.  **Cấu trúc dữ liệu**:
-      *   \`id\`: Chuỗi ngẫu nhiên độc nhất (ví dụ: quest_thotren_12345).
-      *   \`progress\`: Luôn là số 0.
-      *   \`target\`: Một con số hợp lý (ví dụ: 5 cho kill/collect, 1 cho talk).
-      *   \`reward\`: Chuỗi mô tả phần thưởng (ví dụ: "100 EXP, 50 Linh Thạch, 2x Luyện Khí Tán").
-      *   **\`objective\` (BẮT BUỘC)**:
-          *   \`type\` phải là một trong các chuỗi được phép: ${questTypesString}.
-          *   \`targetName\` phải là tên của mục tiêu và PHẢI khớp với một trong các tên đã được cung cấp trong bối cảnh (tên yêu thú, tên vật phẩm, hoặc tên NPC).
-          *   Nếu \`type\` là "collect", BẮT BUỘC phải có trường \`itemId\` và giá trị của nó phải khớp với ID của vật phẩm trong danh sách vật phẩm thu thập.
-      *   **\`rewardObject\` (BẮT BUỘC)**:
-          *   Các trường (\`characterExp\`, \`cultivationExp\`, \`linhThach\`) phải là SỐ và khớp với chuỗi \`reward\`.
-          *   Nếu có vật phẩm thưởng, \`itemId\` phải là một trong các ID đã được cung cấp trong danh sách vật phẩm.
-          *   Ví dụ: Nếu \`reward\` là "150 EXP Tu Luyện, 75 Linh Thạch, 1x Da Sói", thì \`rewardObject\` phải là \`{ "cultivationExp": 150, "linhThach": 75, "itemId": "item_005" }\`.`;
+      *   \\\`id\\\`: Chuỗi ngẫu nhiên độc nhất (ví dụ: quest_thotren_12345).
+      *   \\\`progress\\\`: Luôn là số 0.
+      *   \\\`target\\\`: Một con số hợp lý (ví dụ: 5 cho kill/collect, 1 cho talk).
+      *   \\\`reward\\\`: Chuỗi mô tả phần thưởng (ví dụ: "100 EXP, 50 Linh Thạch, 2x Luyện Khí Tán").
+      *   **\\\`objective\\\` (BẮT BUỘC)**:
+          *   \\\`type\\\` phải là một trong các chuỗi được phép: ${questTypesString}.
+          *   \\\`targetName\\\` phải là tên của mục tiêu và PHẢI khớp với một trong các tên đã được cung cấp trong bối cảnh (tên yêu thú, tên vật phẩm, hoặc tên NPC).
+          *   Nếu \\\`type\\\` là "collect", BẮT BUỘC phải có trường \\\`itemId\\\` và giá trị của nó phải khớp với ID của vật phẩm trong danh sách vật phẩm thu thập.
+      *   **\\\`rewardObject\\\` (BẮT BUỘC)**:
+          *   Các trường (\\\`characterExp\\\`, \\\`cultivationExp\\\`, \\\`linhThach\\\`) phải là SỐ và khớp với chuỗi \\\`reward\\\`.
+          *   Nếu có vật phẩm thưởng, \\\`itemId\\\` phải là một trong các ID đã được cung cấp trong danh sách vật phẩm.
+          *   Ví dụ: Nếu \\\`reward\\\` là "150 EXP Tu Luyện, 75 Linh Thạch, 1x Da Sói", thì \\\`rewardObject\\\` phải là \\\`{ "cultivationExp": 150, "linhThach": 75, "itemId": "item_005" }\\\`.`;
 
   try {
     const response = await ai.models.generateContent({

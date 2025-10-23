@@ -2123,7 +2123,8 @@ const App: React.FC = () => {
                 // For now, we'll just auto-choose 'Chính Đạo' for simplicity
                 setPlayer(p => {
                     if (!p || p.path) return p;
-                    const updatedPlayer = {...p, path: 'Chính Đạo'};
+                    // FIX: Explicitly type `updatedPlayer` as `Player` to prevent TypeScript from incorrectly widening the `path` property to `string`.
+                    const updatedPlayer: Player = {...p, path: 'Chính Đạo'};
                     addNotification("Bạn đã chọn con đường Chính Đạo!");
                     return updateQuestProgress(updatedPlayer, {type: 'event', targetId: questId});
                 })
