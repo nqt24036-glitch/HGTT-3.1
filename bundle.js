@@ -1,61 +1,6 @@
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
-// fake-react-shim.js
-var require_fake_react_shim = __commonJS({
-  "fake-react-shim.js"(exports, module) {
-    "use strict";
-    var react2 = require("react");
-    var import_react_dom = require("react-dom/client");
-    var App = () => {
-      return /* @__PURE__ */ react2.createElement("div", null, "Hello World");
-    };
-    var rootElement = document.getElementById("root");
-    if (!rootElement) {
-      throw new Error("Could not find root element to mount to");
-    }
-    var root = (0, import_react_dom.createRoot)(rootElement);
-    root.render(/* @__PURE__ */ react2.createElement(App, null));
-  }
-});
-
-// index.tsx
-var index_tsx_exports = {};
-__export(index_tsx_exports, {
-  default: () => App_default
-});
-var import_react20 = __toESM(require("react"));
-var import_react_dom = __toESM(require("react-dom/client"));
-
-// App.tsx
-var import_react19 = __toESM(require("react"));
-
-// data/gameData.ts
-var TITLES = [
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import ReactDOM from "react-dom/client";
+const TITLES = [
   {
     id: "Ki\u1EBFm Kh\xE1ch V\xF4 Danh",
     name: "Ki\u1EBFm Kh\xE1ch V\xF4 Danh",
@@ -211,7 +156,7 @@ var TITLES = [
     bonuses: { attack: 1e4, critRate: 0.2, critDamage: 0.5, armorPen: 0.3, hp: 15e3 }
   }
 ];
-var UPGRADE_MULTIPLIERS = [
+const UPGRADE_MULTIPLIERS = [
   0.2,
   0.4,
   0.6,
@@ -233,7 +178,7 @@ var UPGRADE_MULTIPLIERS = [
   56.8,
   156.8
 ];
-var UPGRADE_SUCCESS_RATES = [
+const UPGRADE_SUCCESS_RATES = [
   1,
   1,
   1,
@@ -255,7 +200,7 @@ var UPGRADE_SUCCESS_RATES = [
   0.02,
   0.01
 ];
-var UPGRADE_COSTS = [
+const UPGRADE_COSTS = [
   { level: 1, linhThach: 100, materials: [{ itemId: "upgrade_stone_1", count: 1 }] },
   { level: 2, linhThach: 200, materials: [{ itemId: "upgrade_stone_1", count: 2 }] },
   { level: 3, linhThach: 400, materials: [{ itemId: "upgrade_stone_1", count: 3 }] },
@@ -277,9 +222,9 @@ var UPGRADE_COSTS = [
   { level: 19, linhThach: 5e5, materials: [{ itemId: "upgrade_stone_4", count: 20 }] },
   { level: 20, linhThach: 1e6, materials: [{ itemId: "upgrade_stone_4", count: 30 }] }
 ];
-var SUMMON_COST_SINGLE = 1e3;
-var SUMMON_COST_TEN = 9e3;
-var SUMMON_RATES = {
+const SUMMON_COST_SINGLE = 1e3;
+const SUMMON_COST_TEN = 9e3;
+const SUMMON_RATES = {
   "Th\u1EA7n Tho\u1EA1i": 0.005,
   "Truy\u1EC1n K\u1EF3": 0.095,
   "Hi\u1EBFm": 0.3,
@@ -287,7 +232,7 @@ var SUMMON_RATES = {
   "Ph\u1ED5 th\xF4ng": 0,
   "T\u1ED1i Th\u01B0\u1EE3ng": 0
 };
-var CULTIVATION_METHODS_LIST = [
+const CULTIVATION_METHODS_LIST = [
   {
     id: "cm_001",
     name: "Thanh T\xE2m Quy\u1EBFt",
@@ -387,7 +332,7 @@ var CULTIVATION_METHODS_LIST = [
     }
   }
 ];
-var STORY_ITEMS = [
+const STORY_ITEMS = [
   { id: "item_story_001", name: "Ki\u1EBFm G\xE3y Gia T\u1ED9c", type: "Nhi\u1EC7m v\u1EE5", rarity: "Truy\u1EC1n K\u1EF3", icon: "\uD83D\uDC94", description: "M\u1ED9t thanh ki\u1EBFm g\xE3y, tr\xEAn th\xE2n kh\u1EAFc m\u1ED9t k\xFD hi\u1EC7u huy\u1EBFt m\u1EA1ch c\u1ED5 x\u01B0a. D\xF9 \u0111\xE3 h\u1ECFng nh\u01B0ng v\u1EABn t\u1ECFa ra m\u1ED9t lu\u1ED3ng kh\xED b\u1EA5t ph\xE0m.", story: "\u0110\xE2y l\xE0 di v\u1EADt duy nh\u1EA5t cha \u0111\u1EC3 l\u1EA1i cho b\u1EA1n.", value: 0 },
   { id: "item_story_002", name: "Huy\u1EBFt Tinh Th\xFA", type: "Nhi\u1EC7m v\u1EE5", rarity: "Hi\u1EBFm", icon: "\uD83E\uDE78", description: "Tinh hoa huy\u1EBFt kh\xED c\u1EE7a y\xEAu th\xFA, d\xF9ng \u0111\u1EC3 l\xE0m ch\u1EA5t d\u1EABn cho c\xE1c nghi l\u1EC5 v\xE0 r\xE8n \u0111\xFAc \u0111\u1EB7c bi\u1EC7t.", value: 0 },
   { id: "item_story_003", name: "B\xECnh Linh Kh\xED", type: "Ti\xEAu hao", rarity: "Qu\xFD", icon: "\uD83C\uDFFA", description: "M\u1ED9t chi\u1EBFc b\xECnh nh\u1ECF ch\u1EE9a \u0111\u1EF1ng linh kh\xED tinh thu\u1EA7n, c\xF3 th\u1EC3 h\u1EA5p th\u1EE5 tr\u1EF1c ti\u1EBFp.", expGain: 500, effect: "T\u0103ng 500 Linh L\u1EF1c", value: 200 },
@@ -402,7 +347,7 @@ var STORY_ITEMS = [
   { id: "item_story_012", name: "Th\u1EA7n Huy\u1EBFt B\u1EA5t Di\u1EC7t", type: "Ti\xEAu hao", rarity: "Th\u1EA7n Tho\u1EA1i", icon: "\uD83D\uDC96", description: "D\xF2ng m\xE1u th\u1EA7n th\xE1nh sau khi \u0111\u01B0\u1EE3c h\u1ED3i sinh ho\xE0n to\xE0n, mang l\u1EA1i s\u1EE9c m\u1EA1nh b\u1EA5t di\u1EC7t.", effect: "T\u0103ng v\u0129nh vi\u1EC5n m\u1ED9t l\u01B0\u1EE3ng l\u1EDBn t\u1EA5t c\u1EA3 c\xE1c ch\u1EC9 s\u1ED1.", value: 2e4 },
   { id: "item_story_013", name: "La B\xE0n Huy\u1EC5n C\u1EA3nh", type: "Nhi\u1EC7m v\u1EE5", rarity: "Th\u1EA7n Tho\u1EA1i", icon: "\uD83E\uDDED", description: "M\u1ED9t chi\u1EBFc la b\xE0n c\u1ED5 x\u01B0a c\xF3 th\u1EC3 ch\u1EC9 \u0111\u01B0\u1EDDng v\xE0o Huy\u1EC5n C\u1EA3nh Lu\xE2n H\u1ED3i, n\u01A0i c\u1EA5t gi\u1EEF nh\u1EEFng b\xED m\u1EADt c\u1EE7a Thi\xEAn \u0110\u1EA1o.", value: 0 }
 ];
-var THEMATIC_ITEMS = [
+const THEMATIC_ITEMS = [
   { id: "item_com_01", name: "\xC1o V\u1EA3i Thanh Th\u1EE7y", type: "\xC1o gi\xE1p", rarity: "Ph\u1ED5 th\xF4ng", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { defense: 13 }, requirement: "C\u1EA5p 1", description: "M\u1ED9t chi\u1EBFc \xE1o v\u1EA3i \u0111\u01A0n s\u01A1 nh\u01B0ng ch\u1EAFc ch\u1EAFn, \u0111\u01B0\u1EE3c c\xE1c th\u1EE3 may trong Th\xF4n Thanh Th\u1EE7y l\xE0m ra.", story: "M\u1ED7i \u0111\u01B0\u1EDDng kim m\u0169i ch\u1EC9 \u0111\u1EC1u ch\u1EE9a \u0111\u1EF1ng hy v\u1ECDng v\u1EC1 m\u1ED9t cu\u1ED9c s\u1ED1ng b\xECnh y\xEAn.", value: 10 },
   { id: "item_com_02", name: "Ki\u1EBFm S\u1EAFt Luy\u1EC7n T\u1EADp", type: "V\u0169 kh\xED", rarity: "Ph\u1ED5 th\xF4ng", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 9 }, requirement: "C\u1EA5p 2", description: "V\u0169 kh\xED ti\xEAu chu\u1EA9n cho c\xE1c tu s\u0129 m\u1EDBi nh\u1EADp m\xF4n, d\xF9ng \u0111\u1EC3 r\xE8n luy\u1EC7n th\xE2n th\u1EC3.", story: "Tr\xEAn th\xE2n ki\u1EBFm c\xF2n kh\u1EAFc ch\u1EEF 'C\u1EA7n c\xF9'.", value: 12 },
   { id: "item_com_03", name: "Gi\xE1p Da Chu\u1ED9t R\u1EEBng", type: "\xC1o gi\xE1p", rarity: "Ph\u1ED5 th\xF4ng", slot: "\xE1o gi\xE1p", icon: "\uD83D\uDC55", stats: { defense: 19 }, requirement: "C\u1EA5p 3", description: "\u0110\u01B0\u1EE3c l\xE0m t\u1EEB da c\u1EE7a nh\u1EEFng con chu\u1ED9t l\u1EDBn s\u1ED1ng trong r\u1EEBng, c\xF3 kh\u1EA3 n\u0103ng ch\u1ED1ng \u0111\u1EE1 c\xE1c v\u1EBFt c\xE0o nh\u1ECF.", story: "V\u1EABn c\xF2n thoang tho\u1EA3ng m\xF9i c\u1EE7a r\u1EEBng xanh.", value: 15 },
@@ -455,13 +400,13 @@ var THEMATIC_ITEMS = [
   { id: "item_rar_19", name: "\xC2m Phong \u0110ao", type: "V\u0169 kh\xED", rarity: "Qu\xFD", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 77, critRate: 0.03 }, requirement: "C\u1EA5p 34", description: "L\u01B0\u1EE1i \u0111ao m\u1ECFng nh\u01B0 c\xE1nh ve, \u0111\u01B0\u1EE3c r\xE8n trong n\u01A1i \xE2m kh\xED n\u1EB7ng n\u1EC1.", story: "Ti\u1EBFng vung \u0111ao nh\u01B0 ti\u1EBFng gi\xF3 r\xEDt qua khe c\u1EEDa \u0111\u1ECBa ng\u1EE5c.", value: 330 },
   { id: "item_rar_20", name: "Linh Quy Gi\xE1p", type: "Ph\xE1p b\u1EA3o", rarity: "Qu\xFD", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDC8D", stats: { hp: 250 }, requirement: "C\u1EA5p 35", description: "M\u1ED9t chi\u1EBFc mai r\xF9a nh\u1ECF, \u0111\u01B0\u1EE3c kh\u1EAFc \u0111\u1EA7y ph\xF9 v\u0103n ph\xF2ng ng\u1EF1.", story: "L\xE0 b\xF9a h\u1ED9 m\u1EC7nh c\u1EE7a nh\u1EEFng ng\u01B0\u1EDDi hay \u0111i xa.", value: 340 }
 ];
-var MYTHIC_ITEMS = [
+const MYTHIC_ITEMS = [
   { id: "item_myt_01", name: "H\u1ED7n \u0110\u1ED9n Gi\xE1p", type: "\xC1o gi\xE1p", rarity: "Th\u1EA7n Tho\u1EA1i", slot: "\xE1o gi\xE1p", icon: "\uD83C\uDF0C", stats: { defense: 25e4, magicDefense: 25e4, hp: 5e5 }, requirement: "Kim \u0110an K\u1EF3", description: "B\u1ED9 gi\xE1p \u0111\u01B0\u1EE3c sinh ra t\u1EEB kh\xED h\u1ED7n \u0111\u1ED9n s\u01A1 khai, v\u1EA1n ph\xE1p b\u1EA5t x\xE2m.", story: "M\u1EB7c n\xF3 v\xE0o, b\u1EA1n c\xF3 th\u1EC3 c\u1EA3m nh\u1EADn \u0111\u01B0\u1EE3c s\u1EF1 v\u1EADn h\xE0nh c\u1EE7a \u0111\u1EA1i \u0111\u1EA1o.", value: 1e4, effect: "H\u1EA5p th\u1EE5 m\u1ED9t ph\u1EA7n nh\u1ECF s\xE1t th\u01B0\u01A1ng nh\u1EADn v\xE0o v\xE0 chuy\u1EC3n h\xF3a th\xE0nh MP." },
   { id: "item_myt_02", name: "Khai Thi\xEAn Ph\u1EE7", type: "V\u0169 kh\xED", rarity: "Th\u1EA7n Tho\u1EA1i", slot: "v\u0169 kh\xED", icon: "\uD83E\uDE93", stats: { attack: 25e4, armorPen: 150, critDamage: 250 }, requirement: "Kim \u0110an K\u1EF3", description: "Chi\u1EBFc r\xECu m\xF4 ph\u1ECFng theo th\u1EA7n kh\xED c\u1EE7a B\xE0n C\u1ED5, m\u1ED9t b\xFAa c\xF3 th\u1EC3 khai thi\xEAn l\u1EADp \u0111\u1ECBa.", story: "S\u1EE9c m\u1EA1nh c\u1EE7a n\xF3 \u0111\u1EE7 \u0111\u1EC3 ph\xE1 v\u1EE1 c\xE1c quy t\u1EAFc c\u1EE7a th\u1EBF gi\u1EDBi.", value: 1e4, effect: "C\xF3 t\u1EC9 l\u1EC7 nh\u1ECF g\xE2y hi\u1EC7u \u1EE9ng 'Ph\xE1 Gi\xE1p', gi\u1EA3m m\u1EA1nh ph\xF2ng ng\u1EF1 c\u1EE7a m\u1EE5c ti\xEAu trong 2 l\u01B0\u1EE3t." },
   { id: "item_myt_03", name: "T\u1EA1o H\xF3a Ng\u1ECDc \u0110i\u1EC7p", type: "Ph\xE1p b\u1EA3o", rarity: "Th\u1EA7n Tho\u1EA1i", slot: "ph\xE1p b\u1EA3o", icon: "\uD83D\uDCD6", stats: { hp: 25e4, mp: 25e4, attack: 5e4, defense: 5e4 }, requirement: "Kim \u0110an K\u1EF3", description: "Ghi l\u1EA1i 3000 \u0111\u1EA1i \u0111\u1EA1o, ng\u01B0\u1EDDi s\u1EDF h\u1EEFu n\xF3 c\xF3 th\u1EC3 th\xF4ng hi\u1EC3u v\u1EA1n ph\xE1p, tu vi t\u0103ng nhanh.", story: "B\xED m\u1EADt c\u1EE7a c\u1EA3 v\u0169 tr\u1EE5 d\u01B0\u1EDDng nh\u01B0 n\u1EB1m trong trang s\xE1ch n\xE0y.", value: 1e4, effect: "T\u0103ng 10% l\u01B0\u1EE3ng kinh nghi\u1EC7m v\xE0 linh l\u1EF1c nh\u1EADn \u0111\u01B0\u1EE3c t\u1EEB m\u1ECDi ngu\u1ED3n." },
   { id: "item_myt_04", name: "Tru Ti\xEAn Ki\u1EBFm", type: "V\u0169 kh\xED", rarity: "Th\u1EA7n Tho\u1EA1i", slot: "v\u0169 kh\xED", icon: "\uD83D\uDDE1\uFE0F", stats: { attack: 3e5, critRate: 75, speed: 25e3 }, requirement: "Nguy\xEAn Anh K\u1EF3", description: "Thanh ki\u1EBFm \u0111\u1EE9ng \u0111\u1EA7u trong Tru Ti\xEAn T\u1EE9 Ki\u1EBFm, s\xE1t kh\xED ng\xFAt tr\u1EDDi, chuy\xEAn tru di\u1EC7t ti\xEAn nh\xE2n.", story: "D\u01B0\u1EDBi Tru Ti\xEAn Ki\u1EBFm, v\u1EA1n ti\xEAn \u0111\u1EC1u l\xE0 tro b\u1EE5i.", value: 2e4, effect: "G\xE2y th\xEAm 20% s\xE1t th\u01B0\u01A1ng l\xEAn c\xE1c m\u1EE5c ti\xEAu c\xF3 c\u1EA3nh gi\u1EDBi tu vi cao h\u01A1n ng\u01B0\u1EDDi s\u1EED d\u1EE5ng." }
 ];
-var ULTIMATE_ITEMS = [
+const ULTIMATE_ITEMS = [
   {
     id: "item_ult_001",
     name: "L\xF4i Di\u1EC7t Thi\xEAn Qu\xE2n Ki\u1EBFm",
@@ -483,27 +428,27 @@ var ULTIMATE_ITEMS = [
     value: 999999
   }
 ];
-var CONSUMABLE_ITEMS = [
+const CONSUMABLE_ITEMS = [
   { id: "item_001", name: "H\u1ED3i L\u1EF1c \u0110an", type: "Ti\xEAu hao", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83D\uDC8A", effect: "H\u1ED3i 50 HP", restores: { hp: 50 }, description: "\u0110an d\u01B0\u1EE3c c\u1EA5p th\u1EA5p gi\xFAp h\u1ED3i ph\u1EE5c m\u1ED9t \xEDt sinh l\u1EF1c.", value: 10 },
   { id: "item_002", name: "H\u1ED3i Kh\xED T\xE1n", type: "Ti\xEAu hao", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83C\uDF3F", effect: "H\u1ED3i 30 MP", restores: { mp: 30 }, description: "T\xE1n d\u01B0\u1EE3c gi\xFAp h\u1ED3i ph\u1EE5c m\u1ED9t \xEDt linh l\u1EF1c.", value: 10 },
   { id: "item_006", name: "Luy\u1EC7n Kh\xED T\xE1n", type: "Ti\xEAu hao", rarity: "Qu\xFD", icon: "\uD83C\uDF3F", effect: "T\u0103ng 200 Linh L\u1EF1c", expGain: 200, description: "T\xE1n d\u01B0\u1EE3c gi\xFAp tu s\u0129 Luy\u1EC7n Kh\xED K\u1EF3 t\u0103ng tu vi.", value: 50 },
   { id: "item_019", name: "Tr\xFAc C\u01A1 \u0110an", type: "Ti\xEAu hao", rarity: "Hi\u1EBFm", icon: "\uD83D\uDC8A", effect: "T\u0103ng 1000 Linh L\u1EF1c", expGain: 1e3, description: "\u0110an d\u01B0\u1EE3c c\u1EA7n thi\u1EBFt \u0111\u1EC3 Tr\xFAc C\u01A1 k\u1EF3 tu s\u0129 c\u1EE7ng c\u1ED1 tu vi.", value: 200 }
 ];
-var ALCHEMY_MATERIALS = [
+const ALCHEMY_MATERIALS = [
   { id: "mat_dan_phe", name: "\u0110an Ph\u1EBF", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\u26AB", description: "S\u1EA3n ph\u1EA9m th\u1EA5t b\u1EA1i c\u1EE7a qu\xE1 tr\xECnh luy\u1EC7n \u0111an. Kh\xF4ng c\xF3 t\xE1c d\u1EE5ng g\xEC, nh\u01B0ng c\xF3 th\u1EC3 d\xF9ng \u0111\u1EC3 nghi\xEAn c\u1EE9u c\xF4ng th\u1EE9c.", value: 1 },
   { id: "mat_linh_chi", name: "Linh Chi", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83C\uDF44", description: "M\u1ED9t lo\u1EA1i n\u1EA5m linh thi\xEAng, ch\u1EE9a \u0111\u1EF1ng linh kh\xED c\u1EE7a \u0111\u1EA5t tr\u1EDDi, nguy\xEAn li\u1EC7u ch\xEDnh cho \u0110an T\u1EE5 Linh.", value: 20 },
   { id: "mat_ngoc_dich", name: "Ng\u1ECDc D\u1ECBch", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83D\uDCA7", description: "Tinh t\xFAy c\u1EE7a s\u01B0\u01A1ng s\u1EDBm, d\xF9ng l\xE0m dung m\xF4i trong luy\u1EC7n \u0111an.", value: 15 },
   { id: "mat_huyet_thao", name: "Huy\u1EBFt Th\u1EA3o", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83C\uDF3F", description: "Lo\u1EA1i c\u1ECF c\xF3 m\xE0u \u0111\u1ECF nh\u01B0 m\xE1u, c\xF3 t\xE1c d\u1EE5ng b\u1ED5 huy\u1EBFt, h\u1ED3i ph\u1EE5c sinh l\u1EF1c.", value: 25 },
-  { id: "mat_linh_tuyen", name: "Linh Tuy\u1EC1n", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83D\uDCA7", description: "N\u01B0\u1EDBc su\u1ED1i t\u1EEB n\u01A1i c\xF3 linh m\u1EA1ch, trong s\u1EA1ch v\xE0 ch\u1EE9a nhi\u1EC1u linh kh\xED.", value: 40 },
+  { id: "mat_linh_tuyen", name: "Linh Tuy\u1EC1n", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83D\uDCA7", description: "N\u01B0\u1EDBc su\u1ED1i t\u1EEB n\u01A0i c\xF3 linh m\u1EA1ch, trong s\u1EA1ch v\xE0 ch\u1EE9a nhi\u1EC1u linh kh\xED.", value: 40 },
   { id: "mat_kim_lien", name: "Kim Li\xEAn", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83C\uDF38", description: "Hoa sen v\xE0ng, c\xF3 t\xE1c d\u1EE5ng c\u01B0\u1EDDng h\xF3a th\xE2n th\u1EC3, t\u0103ng c\u01B0\u1EDDng ph\xF2ng ng\u1EF1.", value: 80 },
   { id: "mat_xich_thao", name: "X\xEDch Th\u1EA3o", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83C\uDF3F", description: "Lo\u1EA1i c\u1ECF c\xF3 m\xE0u \u0111\u1ECF r\u1EF1c, gi\xFAp t\u0103ng c\u01B0\u1EDDng kh\xED huy\u1EBFt.", value: 70 },
-  { id: "mat_tu_hoa_qua", name: "T\u1EED H\u1ECFa Qu\u1EA3", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83C\uDF53", description: "Lo\u1EA1i qu\u1EA3 m\u1ECDc g\u1EA7n n\u01A1i c\xF3 \u0111\u1ECBa h\u1ECFa, ch\u1EE9a \u0111\u1EF1ng n\u0103ng l\u01B0\u1EE3ng b\xF9ng n\u1ED5.", value: 100 },
+  { id: "mat_tu_hoa_qua", name: "T\u1EED H\u1ECFa Qu\u1EA3", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83C\uDF53", description: "Lo\u1EA1i qu\u1EA3 m\u1ECDc g\u1EA7n n\u01A0i c\xF3 \u0111\u1ECBa h\u1ECFa, ch\u1EE9a \u0111\u1EF1ng n\u0103ng l\u01B0\u1EE3ng b\xF9ng n\u1ED5.", value: 100 },
   { id: "mat_thiet_diep", name: "Thi\u1EBFt Di\u1EC7p", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83C\uDF43", description: "L\xE1 c\xE2y c\u1EE9ng nh\u01B0 s\u1EAFt, d\xF9ng \u0111\u1EC3 trung h\xF2a c\xE1c lo\u1EA1i d\u01B0\u1EE3c li\u1EC7u c\xF3 t\xEDnh h\u1ECFa m\u1EA1nh.", value: 60 },
   { id: "mat_hoa_lien_tu", name: "H\u1ECFa Li\xEAn T\u1EED", type: "Nguy\xEAn li\u1EC7u", rarity: "Hi\u1EBFm", icon: "\uD83D\uDD25", description: "H\u1EA1t c\u1EE7a hoa sen l\u1EEDa, ch\u1EE9a \u0111\u1EF1ng h\u1ECFa \u0111\u1ED9c tinh thu\u1EA7n.", value: 150 },
-  { id: "mat_long_tam_co", name: "Long T\xE2m C\u1ECF", type: "Nguy\xEAn li\u1EC7u", rarity: "Hi\u1EBFm", icon: "\uD83C\uDF40", description: "Lo\u1EA1i c\u1ECF m\u1ECDc n\u01A1i c\xF3 long kh\xED, gi\xFAp t\u0103ng c\u01B0\u1EDDng uy l\u1EF1c c\xF4ng ph\xE1p.", value: 160 },
+  { id: "mat_long_tam_co", name: "Long T\xE2m C\u1ECF", type: "Nguy\xEAn li\u1EC7u", rarity: "Hi\u1EBFm", icon: "\uD83C\uDF40", description: "Lo\u1EA1i c\u1ECF m\u1ECDc n\u01A0i c\xF3 long kh\xED, gi\xFAp t\u0103ng c\u01B0\u1EDDng uy l\u1EF1c c\xF4ng ph\xE1p.", value: 160 },
   { id: "mat_thien_lo_dich", name: "Thi\xEAn L\u1ED9 D\u1ECBch", type: "Nguy\xEAn li\u1EC7u", rarity: "Hi\u1EBFm", icon: "\uD83D\uDCA7", description: "S\u01B0\u01A1ng c\u1EE7a tr\u1EDDi, c\u1EF1c k\u1EF3 tinh khi\u1EBFt, d\xF9ng trong c\xE1c lo\u1EA1i \u0111an d\u01B0\u1EE3c cao c\u1EA5p.", value: 200 }
 ];
-var ALCHEMY_PILLS = [
+const ALCHEMY_PILLS = [
   { id: "pill_tu_linh", name: "\u0110an T\u1EE5 Linh", type: "\u0110an D\u01B0\u1EE3c", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83D\uDC8A", effect: "T\u0103ng 10% t\u1ED1c \u0111\u1ED9 tu luy\u1EC7n trong 30 ph\xFAt.", description: "\u0110an d\u01B0\u1EE3c c\u01A1 b\u1EA3n gi\xFAp tu s\u0129 Luy\u1EC7n Kh\xED K\u1EF3 \u0111\u1EA9y nhanh t\u1ED1c \u0111\u1ED9 h\u1EA5p th\u1EE5 linh kh\xED.", value: 100, buffs: { statModifiers: { cultivationSpeedBonus: 0.1 }, duration: 1800, cancellable: true } },
   { id: "pill_tri_thuong", name: "\u0110an Tr\u1ECB Th\u01B0\u01A1ng", type: "\u0110an D\u01B0\u1EE3c", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83D\uDC8A", effect: "Ph\u1EE5c h\u1ED3i 25% HP t\u1ED1i \u0111a.", restores: { hpPercent: 0.25 }, description: "\u0110an d\u01B0\u1EE3c ch\u1EEFa th\u01B0\u01A1ng ph\u1ED5 bi\u1EBFn, nhanh ch\xF3ng h\u1ED3i ph\u1EE5c m\u1ED9t l\u01B0\u1EE3ng l\u1EDBn sinh l\u1EF1c.", value: 80 },
   { id: "pill_cuong_the", name: "\u0110an C\u01B0\u1EDDng Th\u1EC3", type: "\u0110an D\u01B0\u1EE3c", rarity: "Qu\xFD", icon: "\uD83D\uDC8A", effect: "T\u0103ng 10% DEF v\xE0 5% HP t\u1ED1i \u0111a trong 10 l\u01B0\u1EE3t chi\u1EBFn \u0111\u1EA5u.", description: "T\u1EA1m th\u1EDDi c\u01B0\u1EDDng h\xF3a th\xE2n th\u1EC3, gi\xFAp ch\u1ED1ng ch\u1ECBu t\u1ED1t h\u01A1n trong giao tranh.", value: 250, buffs: { statModifiers: { defense: 0.1, hp: 0.05 }, duration: 10, cancellable: true } },
@@ -512,13 +457,13 @@ var ALCHEMY_PILLS = [
   { id: "pill_ngu_linh", name: "\u0110an Ng\u1EF1 Linh", type: "\u0110an D\u01B0\u1EE3c", rarity: "Hi\u1EBFm", icon: "\uD83D\uDC8A", effect: "T\u0103ng t\u1ED1c \u0111\u1ED9 tri\u1EC7u h\u1ED3i linh th\xFA.", description: "Gi\xFAp r\xFAt ng\u1EAFn th\u1EDDi gian g\u1ECDi ra linh th\xFA ho\u1EB7c \u0111\u1ED3ng h\xE0nh trong chi\u1EBFn \u0111\u1EA5u.", value: 450 },
   { id: "pill_truc_co", name: "\u0110an Tr\xFAc C\u01A1", type: "\u0110an D\u01B0\u1EE3c", rarity: "Hi\u1EBFm", icon: "\uD83D\uDC8A", effect: "H\u1ED7 tr\u1EE3 \u0111\u1ED9t ph\xE1 c\u1EA3nh gi\u1EDBi Tr\xFAc C\u01A1.", expGain: 5e3, description: "\u0110an d\u01B0\u1EE3c quan tr\u1ECDng gi\xFAp tu s\u0129 Luy\u1EC7n Kh\xED \u0111\u1EC9nh phong c\xF3 c\u01A1 h\u1ED9i \u0111\u1ED9t ph\xE1.", value: 1e3 }
 ];
-var UPGRADE_MATERIALS = [
+const UPGRADE_MATERIALS = [
   { id: "upgrade_stone_1", name: "Huy\u1EC1n Thi\u1EBFt S\u01A1 C\u1EA5p", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83E\uDEA8", description: "\u0110\xE1 c\u01B0\u1EDDng h\xF3a c\u01A1 b\u1EA3n, d\xF9ng cho trang b\u1ECB c\u1EA5p th\u1EA5p.", value: 20 },
   { id: "upgrade_stone_2", name: "Huy\u1EC1n Thi\u1EBFt Trung C\u1EA5p", type: "Nguy\xEAn li\u1EC7u", rarity: "Qu\xFD", icon: "\uD83E\uDEA8", description: "\u0110\xE1 c\u01B0\u1EDDng h\xF3a ph\u1ED5 bi\u1EBFn, d\xF9ng cho trang b\u1ECB t\u1EA7m trung.", value: 100 },
   { id: "upgrade_stone_3", name: "Huy\u1EC1n Thi\u1EBFt Cao C\u1EA5p", type: "Nguy\xEAn li\u1EC7u", rarity: "Hi\u1EBFm", icon: "\uD83D\uDC8E", description: "\u0110\xE1 c\u01B0\u1EDDng h\xF3a hi\u1EBFm, d\xF9ng cho trang b\u1ECB cao c\u1EA5p.", value: 500 },
   { id: "upgrade_stone_4", name: "Huy\u1EC1n Thi\u1EBFt C\u1EF1c Ph\u1EA9m", type: "Nguy\xEAn li\u1EC7u", rarity: "Truy\u1EC1n K\u1EF3", icon: "\uD83D\uDC8E", description: "\u0110\xE1 c\u01B0\u1EDDng h\xF3a c\u1EF1c hi\u1EBFm, d\xF9ng cho c\xE1c trang b\u1ECB huy\u1EC1n tho\u1EA1i.", value: 2e3 }
 ];
-var MISC_ITEMS = [
+const MISC_ITEMS = [
   { id: "item_004", name: "C\u1ECF Linh Tinh", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83C\uDF3F", description: "Lo\u1EA1i c\u1ECF d\u1EA1i ch\u1EE9a m\u1ED9t \xEDt linh kh\xED, l\xE0 nguy\xEAn li\u1EC7u c\u01A1 b\u1EA3n nh\u1EA5t trong luy\u1EC7n \u0111an.", value: 5 },
   { id: "item_005", name: "Da S\xF3i", type: "Nguy\xEAn li\u1EC7u", rarity: "Ph\u1ED5 th\xF4ng", icon: "\uD83D\uDC3A", description: "Da c\u1EE7a D\xE3 Lang, c\xF3 th\u1EC3 d\xF9ng \u0111\u1EC3 ch\u1EBF t\u1EA1o gi\xE1p nh\u1EB9.", value: 8 },
   { id: "mat_tay_linh_thach", name: "T\u1EA9y Linh Th\u1EA1ch", type: "Ti\xEAu hao", rarity: "Truy\u1EC1n K\u1EF3", icon: "\uD83D\uDC8E", description: "Vi\xEAn \u0111\xE1 ch\u1EE9a \u0111\u1EF1ng s\u1EE9c m\u1EA1nh h\u1ED7n \u0111\u1ED9n, c\xF3 kh\u1EA3 n\u0103ng t\u1EA9y r\u1EEDa v\xE0 t\xE1i t\u1EA1o l\u1EA1i linh c\u0103n c\u1EE7a m\u1ED9t tu s\u0129.", effect: "T\u1EA9y luy\u1EC7n l\u1EA1i Linh C\u0103n", value: 1e4 },
@@ -527,7 +472,7 @@ var MISC_ITEMS = [
   { id: "item_bth_02", name: "Long Tinh S\u01A1 Th\u1EE7y", type: "Nguy\xEAn li\u1EC7u", rarity: "Th\u1EA7n Tho\u1EA1i", icon: "\uD83D\uDCA7", description: "Tinh hoa c\u1EE7a S\u01A1 Th\u1EE7y Th\xE1nh Long, ch\u1EE9a \u0111\u1EF1ng s\u1EE9c m\u1EA1nh s\xE1ng t\u1EA1o nguy\xEAn th\u1EE7y.", value: 1e5 },
   { id: "item_bth_03", name: "Long V\u0169 L\u01B0u Quang", type: "Ph\xE1p b\u1EA3o", slot: "ph\xE1p b\u1EA3o", rarity: "Th\u1EA7n Tho\u1EA1i", icon: "\u2728", description: "M\u1ED9t chi\u1EBFc l\xF4ng v\u0169 c\u1EE7a Th\xE1nh Long, ch\u1EE9a \u0111\u1EF1ng s\u1EE9c m\u1EA1nh kh\xF4ng gian, t\u0103ng m\u1EA1nh t\u1ED1c \u0111\u1ED9.", stats: { speed: 5e3, evasion: 0.2 }, value: 5e4 }
 ];
-var ITEM_LIST = [
+const ITEM_LIST = [
   ...STORY_ITEMS,
   ...THEMATIC_ITEMS,
   ...MYTHIC_ITEMS,
@@ -538,7 +483,7 @@ var ITEM_LIST = [
   ...UPGRADE_MATERIALS,
   ...MISC_ITEMS
 ];
-var SKILLS = [
+const SKILLS = [
   { id: "skill_001", name: "Nh\u1EA5t Ki\u1EBFm Tr\u1EA3m", origin: "M\xF4n ph\xE1i c\u01A1 b\u1EA3n", type: "Ch\u1EE7 \u0110\u1ED9ng", damage: 20, mpCost: 10, description: "M\u1ED9t \u0111\u01B0\u1EDDng ki\u1EBFm c\u01A1 b\u1EA3n nh\u01B0ng nhanh v\xE0 m\u1EA1nh.", visualEffect: "slash", soundEffectUrl: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_28d7a126a2.mp3?filename=sword-hit-7160.mp3" },
   { id: "skill_002", name: "H\u1ED3i Xu\xE2n Thu\u1EADt", origin: "Y thu\u1EADt", type: "Ch\u1EE7 \u0110\u1ED9ng", heal: 50, mpCost: 15, description: "S\u1EED d\u1EE5ng linh l\u1EF1c \u0111\u1EC3 ch\u1EEFa l\xE0nh v\u1EBFt th\u01B0\u01A1ng.", visualEffect: "heal" },
   { id: "skill_003", name: "Kim Cang H\u1ED9 Th\u1EC3", origin: "Luy\u1EC7n th\u1EC3", type: "B\u1ECB \u0110\u1ED9ng", passiveBonus: { defense: 20 }, description: "Linh l\u1EF1c t\u1EF1 \u0111\u1ED9ng b\u1EA3o v\u1EC7 c\u01A1 th\u1EC3, t\u0103ng ph\xF2ng ng\u1EF1." },
@@ -579,7 +524,7 @@ var SKILLS = [
     visualEffect: "slash"
   }
 ];
-var MONSTERS = [
+const MONSTERS = [
   { id: "monster_001", name: "C\u1ECDc g\u1ED7", level: 1, cultivation: { realm: "Luy\u1EC7n Kh\xED", stage: 1, lp: 0, lpToNext: 0 }, hp: 30, stats: { attack: 0, defense: 5, speed: 1, magicAttack: 0, magicDefense: 0, critRate: 0, critDamage: 1.5, accuracy: 1, evasion: 0, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, spiritRoot: { classificationId: "ngu", attributes: ["M\u1ED9c"], multiplier: 1 }, rewards: { characterExp: 5, cultivationExp: 2, linhThach: 0, items: [] } },
   { id: "monster_002", name: "Chu\u1ED9t \u0110\xF3i", level: 3, cultivation: { realm: "Luy\u1EC7n Kh\xED", stage: 3, lp: 0, lpToNext: 0 }, hp: 60, stats: { attack: 11, defense: 6, speed: 12, magicAttack: 0, magicDefense: 1, critRate: 0.05, critDamage: 1.5, accuracy: 0.85, evasion: 0.03, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, spiritRoot: { classificationId: "ngu", attributes: ["Th\u1ED5"], multiplier: 1 }, rewards: { characterExp: 25, cultivationExp: 15, linhThach: 5, items: [] } },
   { id: "monster_003", name: "Ch\xF3 Hoang", level: 5, cultivation: { realm: "Luy\u1EC7n Kh\xED", stage: 5, lp: 0, lpToNext: 0 }, hp: 90, stats: { attack: 18, defense: 10, speed: 15, magicAttack: 0, magicDefense: 3, critRate: 0.1, critDamage: 1.5, accuracy: 0.9, evasion: 0.04, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, spiritRoot: { classificationId: "ngu", attributes: ["Th\u1ED5"], multiplier: 1 }, rewards: { characterExp: 40, cultivationExp: 25, linhThach: 8, items: [{ itemId: "item_005", chance: 0.2 }] } },
@@ -605,7 +550,7 @@ var MONSTERS = [
   { id: "monster_015", name: "Linh H\u1EA7u C\u1ED5", level: 115, cultivation: { realm: "Luy\u1EC7n H\u01B0", stage: 8, lp: 0, lpToNext: 0 }, hp: 6e5, stats: { attack: 6e4, defense: 48e3, speed: 3200, magicAttack: 2e4, magicDefense: 4e4, critRate: 0.3, critDamage: 2.3, accuracy: 1.2, evasion: 0.1, armorPen: 0.4, blockRate: 0.3, mentalDemonResistance: 0.5 }, spiritRoot: { classificationId: "thien", attributes: ["Th\u1ED5"], multiplier: 1.7 }, rewards: { characterExp: 4e3, cultivationExp: 2800, linhThach: 2e3, items: [] } },
   { id: "monster_016", name: "C\u1EF1 M\u1ED9c H\u1ED9 V\u1EC7", level: 135, cultivation: { realm: "H\u1EE3p Th\u1EC3", stage: 5, lp: 0, lpToNext: 0 }, hp: 8e5, stats: { attack: 8e4, defense: 1e5, speed: 1e3, magicAttack: 6e4, magicDefense: 9e4, critRate: 0.1, critDamage: 2, accuracy: 1.1, evasion: 0.05, armorPen: 0.2, blockRate: 0.4, mentalDemonResistance: 0.6 }, spiritRoot: { classificationId: "thien", attributes: ["M\u1ED9c"], multiplier: 1.7 }, rewards: { characterExp: 6e3, cultivationExp: 4e3, linhThach: 2500, items: [] } }
 ];
-var TRAN_PHAP_LIST = [
+const TRAN_PHAP_LIST = [
   {
     id: "tp_001",
     name: "T\u1EE5 Linh Tr\u1EADn",
@@ -620,7 +565,7 @@ var TRAN_PHAP_LIST = [
     combatBonus: { attack: 20 }
   }
 ];
-var COMPANION_LIST = [
+const COMPANION_LIST = [
   {
     id: "companion_001",
     name: "Ti\u1EC3u H\u1ED3 Ly",
@@ -661,23 +606,31 @@ var COMPANION_LIST = [
     passiveSkills: [{ name: "Long H\u1ED3n", description: "T\u0103ng to\xE0n b\u1ED9 thu\u1ED9c t\xEDnh cho ch\u1EE7 nh\xE2n.", statBonuses: { attack: 1e3, defense: 1e3, hp: 5e3 } }]
   }
 ];
-var NPC_LIST = [
+const NPC_LIST = [
   { id: "npc_001", name: "Tr\u01B0\u1EDFng th\xF4n", level: 10, cultivation: { realm: "Luy\u1EC7n Kh\xED", stage: 8, lp: 0, lpToNext: 0 }, description: "Ng\u01B0\u1EDDi \u0111\u1EE9ng \u0111\u1EA7u Th\xF4n Thanh Th\u1EE7y, lu\xF4n lo l\u1EAFng cho d\xE2n l\xE0ng.", avatarUrl: "https://i.postimg.cc/VLDxJPCJ/418dcf6b-8615-4669-a1d6-044b157f0cd4.jpg", baseStats: { attack: 10, defense: 10, speed: 10, magicAttack: 0, magicDefense: 5, critRate: 0.05, critDamage: 1.5, accuracy: 0.9, evasion: 0.05, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, totalStats: { attack: 10, defense: 10, speed: 10, magicAttack: 0, magicDefense: 5, critRate: 0.05, critDamage: 1.5, accuracy: 0.9, evasion: 0.05, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, equippedItems: {}, spiritRoot: { classificationId: "ngu", attributes: ["M\u1ED9c", "Th\u1ED5"], multiplier: 1 }, currentAreaId: "area_thanh_thuy" },
   { id: "npc_002", name: "Th\u1EE3 r\xE8n", level: 15, cultivation: { realm: "Luy\u1EC7n Kh\xED", stage: 10, lp: 0, lpToNext: 0 }, description: "M\u1ED9t th\u1EE3 r\xE8n c\u1EE5c c\u1EB1n nh\u01B0ng c\xF3 tay ngh\u1EC1 cao.", avatarUrl: "https://i.postimg.cc/VLDxJPCJ/418dcf6b-8615-4669-a1d6-044b157f0cd4.jpg", baseStats: { attack: 15, defense: 15, speed: 8, magicAttack: 0, magicDefense: 8, critRate: 0.05, critDamage: 1.5, accuracy: 0.9, evasion: 0.05, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, totalStats: { attack: 15, defense: 15, speed: 8, magicAttack: 0, magicDefense: 8, critRate: 0.05, critDamage: 1.5, accuracy: 0.9, evasion: 0.05, armorPen: 0, blockRate: 0, mentalDemonResistance: 0 }, equippedItems: {}, spiritRoot: { classificationId: "thien", attributes: ["Kim"], multiplier: 1.7 }, currentAreaId: "area_thanh_thuy" },
   { id: "npc_003", name: "Y\u1EBFn T\u1EED Nguy\u1EC7t", level: 30, cultivation: { realm: "Tr\xFAc C\u01A1", stage: 5, lp: 0, lpToNext: 0 }, description: "Gi\xE1m Linh S\u01B0 b\xED \u1EA9n t\u1EA1i Th\xE0nh V\xE2n L\xE2m, c\xF3 kh\u1EA3 n\u0103ng nh\xECn th\u1EA5u linh c\u0103n c\u1EE7a ng\u01B0\u1EDDi kh\xE1c.", avatarUrl: "https://i.postimg.cc/tgmHkbYf/95cd50f0-80f1-4c6c-bcf6-44b70ce73044.jpg", baseStats: { attack: 20, defense: 20, speed: 20, magicAttack: 50, magicDefense: 50, critRate: 0.1, critDamage: 1.6, accuracy: 1, evasion: 0.1, armorPen: 0, blockRate: 0, mentalDemonResistance: 0.2 }, totalStats: { attack: 20, defense: 20, speed: 20, magicAttack: 50, magicDefense: 50, critRate: 0.1, critDamage: 1.6, accuracy: 1, evasion: 0.1, armorPen: 0, blockRate: 0, mentalDemonResistance: 0.2 }, equippedItems: {}, spiritRoot: { classificationId: "song", attributes: ["Th\u1EE7y", "B\u0103ng"], multiplier: 5 }, currentAreaId: "area_van_lam" }
 ];
-var ALCHEMY_EXP_TABLE = Array.from({ length: 50 }, (_, i) => Math.floor(100 * (i + 1) * 1.2 ** i));
-var ALCHEMY_RECIPES = [
+const ALCHEMY_EXP_TABLE = Array.from({ length: 50 }, (_, i) => Math.floor(100 * (i + 1) * 1.2 ** i));
+const ALCHEMY_RECIPES = [
   { id: "recipe_001", name: "\u0110an T\u1EE5 Linh", inputs: [{ itemId: "mat_linh_chi", count: 2 }, { itemId: "mat_ngoc_dich", count: 1 }], outputId: "pill_tu_linh", requiredLevel: 1, expGain: 10, successChance: 0.8, level: 1, requiredCauldronLevel: 1 },
   { id: "recipe_002", name: "\u0110an Tr\u1ECB Th\u01B0\u01A1ng", inputs: [{ itemId: "mat_huyet_thao", count: 2 }, { itemId: "item_004", count: 1 }], outputId: "pill_tri_thuong", requiredLevel: 3, expGain: 15, successChance: 0.75, level: 1, requiredCauldronLevel: 1 }
 ];
+const BLACKSMITH_INVENTORY = [
+  { itemId: "item_com_02", price: 50 },
+  { itemId: "item_com_01", price: 45 },
+  { itemId: "upgrade_stone_1", price: 100 }
+];
+const CRAFTING_RECIPES = [
+  { inputs: ["item_005", "item_005"], output: "item_rar_01" }
+];
 
 // constants.ts
-var CULTIVATION_REALMS = ["Luy\u1EC7n Kh\xED", "Tr\xFAc C\u01A1", "Kim \u0110an", "Nguy\xEAn Anh", "H\xF3a Th\u1EA7n", "Luy\u1EC7n H\u01B0", "H\u1EE3p Th\u1EC3", "\u0110\u1ED9 Ki\u1EBFp", "\u0110\u1EA1i Th\u1EEBa", "Ch\xE2n Ti\xEAn", "Thi\xEAn Ti\xEAn", "Ti\xEAn V\u01B0\u01A1ng", "Ti\xEAn \u0110\u1EBF", "H\u1EADu Th\xE1nh V\u1ECB"];
-var REALM_BREAKTHROUGH_FLAT_BONUS = [10, 50, 100, 200, 300, 400, 600, 800, 1e3, 5e3, 8e3, 1e4, 12e3, 15e3];
-var REALM_BREAKTHROUGH_PERCENT_BONUS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5];
-var STAGE_PERCENT_BONUS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5];
-var ITEM_RARITY_COLORS = {
+const CULTIVATION_REALMS = ["Luy\u1EC7n Kh\xED", "Tr\xFAc C\u01A1", "Kim \u0110an", "Nguy\xEAn Anh", "H\xF3a Th\u1EA7n", "Luy\u1EC7n H\u01B0", "H\u1EE3p Th\u1EC3", "\u0110\u1ED9 Ki\u1EBFp", "\u0110\u1EA1i Th\u1EEBa", "Ch\xE2n Ti\xEAn", "Thi\xEAn Ti\xEAn", "Ti\xEAn V\u01B0\u01A1ng", "Ti\xEAn \u0110\u1EBF", "H\u1EADu Th\xE1nh V\u1ECB"];
+const REALM_BREAKTHROUGH_FLAT_BONUS = [10, 50, 100, 200, 300, 400, 600, 800, 1e3, 5e3, 8e3, 1e4, 12e3, 15e3];
+const REALM_BREAKTHROUGH_PERCENT_BONUS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5];
+const STAGE_PERCENT_BONUS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5];
+const ITEM_RARITY_COLORS = {
   "Ph\u1ED5 th\xF4ng": "border-gray-400",
   "Qu\xFD": "border-green-500",
   "Hi\u1EBFm": "border-blue-500",
@@ -685,7 +638,7 @@ var ITEM_RARITY_COLORS = {
   "Th\u1EA7n Tho\u1EA1i": "border-red-600",
   "T\u1ED1i Th\u01B0\u1EE3ng": "border-purple-500 animate-pulse"
 };
-var ITEM_RARITY_TEXT_COLORS = {
+const ITEM_RARITY_TEXT_COLORS = {
   "Ph\u1ED5 th\xF4ng": "text-white",
   "Qu\xFD": "text-green-400",
   "Hi\u1EBFm": "text-blue-400",
@@ -693,7 +646,7 @@ var ITEM_RARITY_TEXT_COLORS = {
   "Th\u1EA7n Tho\u1EA1i": "text-red-500",
   "T\u1ED1i Th\u01B0\u1EE3ng": "text-purple-400"
 };
-var COMBAT_STAT_LABELS = {
+const COMBAT_STAT_LABELS = {
   attack: "C\xF4ng K\xEDch",
   magicAttack: "Ph\xE1p C\xF4ng",
   defense: "Ph\xF2ng Ng\u1EF1",
@@ -710,7 +663,7 @@ var COMBAT_STAT_LABELS = {
 };
 
 // data/mainStoryQuests.ts
-var MAIN_STORY_QUESTS = [
+const MAIN_STORY_QUESTS = [
   {
     id: "sq_01",
     isStoryQuest: true,
@@ -851,7 +804,7 @@ var MAIN_STORY_QUESTS = [
     id: "sq_12",
     isStoryQuest: true,
     title: "H\u1ED3i Sinh D\xF2ng Huy\u1EBFt M\u1EA1ch (12)",
-    description: "Li\xEAn minh \u0111\xE3 \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp, nh\u01B0ng \u0111\u1EC3 th\u1EF1c s\u1EF1 \u0111\u1ED1i \u0111\u1EA7u v\u1EDBi Thi\xEAn \u0110\u1EA1o, b\u1EA1n c\u1EA7n t\xECm ra \u0111i\u1EC3m y\u1EBFu c\u1EE7a ch\xFAng. B\u1EA1ch Y Ti\xEAn T\u1EED t\u1EA1i Thi\xEAn Cung ti\u1EBFt l\u1ED9 v\u1EC1 'La B\xE0n Huy\u1EC5n C\u1EA3nh', ch\xECa kh\xF3a \u0111\u1EC3 v\xE0o n\u01A1i c\u1EA5t gi\u1EEF b\xED m\u1EADt, nh\u01B0ng n\xF3 \u0111ang \u0111\u01B0\u1EE3c m\u1ED9t 'Thi\xEAn Cung V\u1EC7 Th\u1EA7n' canh gi\u1EEF.",
+    description: "Li\xEAn minh \u0111\xE3 \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp, nh\u01B0ng \u0111\u1EC3 th\u1EF1c s\u1EF1 \u0111\u1ED1i \u0111\u1EA7u v\u1EDBi Thi\xEAn \u0110\u1EA1o, b\u1EA1n c\u1EA7n t\xECm ra \u0111i\u1EC3m y\u1EBFu c\u1EE7a ch\xFAng. B\u1EA1ch Y Ti\xEAn T\u1EED t\u1EA1i Thi\xEAn Cung ti\u1EBFt l\u1ED9 v\u1EC1 'La B\xE0n Huy\u1EC5n C\u1EA3nh', ch\xECa kh\xF3a \u0111\u1EC3 v\xE0o n\u01A0i c\u1EA5t gi\u1EEF b\xED m\u1EADt, nh\u01B0ng n\xF3 \u0111ang \u0111\u01B0\u1EE3c m\u1ED9t 'Thi\xEAn Cung V\u1EC7 Th\u1EA7n' canh gi\u1EEF.",
     progress: 0,
     target: 1,
     objective: { type: "kill", targetName: "Thi\xEAn Cung V\u1EC7 Th\u1EA7n", targetId: "monster_story_007" },
@@ -901,17 +854,17 @@ var MAIN_STORY_QUESTS = [
 ];
 
 // data/worldMapData.ts
-var WORLD_MAP_DATA = [
+const WORLD_MAP_DATA = [
   {
     id: "realm_pham_gioi",
     name: "Ph\xE0m Gi\u1EDBi",
-    description: "L\xE0 n\u01A1i kh\u1EDFi \u0111\u1EA7u, sinh s\u1ED1ng c\u1EE7a ng\u01B0\u1EDDi th\u01B0\u1EDDng, \xEDt linh kh\xED, t\xE0i nguy\xEAn ngh\xE8o n\xE0n nh\u01B0ng c\xF3 nhi\u1EC1u c\xE2u chuy\u1EC7n m\u1EDF \u0111\u1EA7u.",
+    description: "L\xE0 n\u01A0i kh\u1EDFi \u0111\u1EA7u, sinh s\u1ED1ng c\u1EE7a ng\u01B0\u1EDDi th\u01B0\u1EDDng, \xEDt linh kh\xED, t\xE0i nguy\xEAn ngh\xE8o n\xE0n nh\u01B0ng c\xF3 nhi\u1EC1u c\xE2u chuy\u1EC7n m\u1EDF \u0111\u1EA7u.",
     levelRange: "1-40",
     areas: [
       {
         id: "area_thanh_thuy",
         name: "Th\xF4n Thanh Th\u1EE7y",
-        description: "L\xE0ng kh\u1EDFi \u0111\u1EA7u \u2013 n\u01A1i nh\xE2n v\u1EADt ch\xEDnh l\u1EDBn l\xEAn. Giao di\u1EC7n c\u01A1 b\u1EA3n, nhi\u1EC7m v\u1EE5 h\u01B0\u1EDBng d\u1EABn.",
+        description: "L\xE0ng kh\u1EDFi \u0111\u1EA7u \u2013 n\u01A0i nh\xE2n v\u1EADt ch\xEDnh l\u1EDBn l\xEAn. Giao di\u1EC7n c\u01A1 b\u1EA3n, nhi\u1EC7m v\u1EE5 h\u01B0\u1EDBng d\u1EABn.",
         levelRange: "1-5",
         npcs: ["Tr\u01B0\u1EDFng th\xF4n", "Th\u1EA7y thu\u1ED1c", "Th\u1EE3 r\xE8n"],
         monsters: ["C\u1ECDc g\u1ED7", "Chu\u1ED9t \u0110\xF3i", "Ch\xF3 Hoang"],
@@ -922,7 +875,7 @@ var WORLD_MAP_DATA = [
       {
         id: "area_van_lam",
         name: "Th\xE0nh V\xE2n L\xE2m",
-        description: "Th\xE0nh l\u1EDBn, trung t\xE2m giao th\u01B0\u01A1ng. C\xF3 nhi\u1EC1u NPC, n\u01A1i nh\u1EADn nhi\u1EC7m v\u1EE5, luy\u1EC7n \u0111an, giao d\u1ECBch.",
+        description: "Th\xE0nh l\u1EDBn, trung t\xE2m giao th\u01B0\u01A1ng. C\xF3 nhi\u1EC1u NPC, n\u01A0i nh\u1EADn nhi\u1EC7m v\u1EE5, luy\u1EC7n \u0111an, giao d\u1ECBch.",
         levelRange: "5-15",
         npcs: ["Th\u01B0\u01A1ng nh\xE2n", "Quan binh", "\u0110\u1EA1o s\u0129 lang thang", "Y\u1EBFn T\u1EED Nguy\u1EC7t"],
         monsters: ["Kh\xF4ng c\xF3 (th\xE0nh an to\xE0n)"],
@@ -953,7 +906,7 @@ var WORLD_MAP_DATA = [
       {
         id: "area_tich_duong",
         name: "\u0110\u1EC9nh T\u1ECBch D\u01B0\u01A1ng",
-        description: "N\u01A1i ng\u1EAFm ho\xE0ng h\xF4n \u2013 c\xF3 NPC b\xED \u1EA9n, l\u1EA7n \u0111\u1EA7u ti\xEAn nh\u1EAFc \u0111\u1EBFn 'tu ti\xEAn'.",
+        description: "N\u01A0i ng\u1EAFm ho\xE0ng h\xF4n \u2013 c\xF3 NPC b\xED \u1EA9n, l\u1EA7n \u0111\u1EA7u ti\xEAn nh\u1EAFc \u0111\u1EBFn 'tu ti\xEAn'.",
         levelRange: "25-30",
         npcs: ["Ti\xEAn gi\u1EA3 b\xED \u1EA9n"],
         monsters: [],
@@ -963,7 +916,7 @@ var WORLD_MAP_DATA = [
       {
         id: "area_linh_thu_sam_lam",
         name: "Linh Th\xFA S\xE2m L\xE2m",
-        description: "N\u01A1i \u1EA9n n\u1EA5u c\u1EE7a c\xE1c Linh Th\xFA c\u1ED5 \u0111\u1EA1i.",
+        description: "N\u01A0i \u1EA9n n\u1EA5u c\u1EE7a c\xE1c Linh Th\xFA c\u1ED5 \u0111\u1EA1i.",
         levelRange: "25-40",
         npcs: ["Th\u1EA7n Th\xFA L\xE3o gi\u1EA3"],
         monsters: ["Y\xEAu Th\xFA Tinh Linh"],
@@ -976,13 +929,13 @@ var WORLD_MAP_DATA = [
   {
     id: "realm_tu_chan_gioi",
     name: "Tu Ch\xE2n Gi\u1EDBi",
-    description: "N\u01A1i c\xE1c tu s\u0129 ho\u1EA1t \u0111\u1ED9ng, linh kh\xED d\xE0y \u0111\u1EB7c, c\xF3 nhi\u1EC1u t\xF4ng m\xF4n, y\xEAu th\xFA, di t\xEDch c\u1ED5 x\u01B0a. N\u01A1i b\u1EAFt \u0111\u1EA7u con \u0111\u01B0\u1EDDng tu ti\xEAn th\u1EF1c s\u1EF1.",
+    description: "N\u01A0i c\xE1c tu s\u0129 ho\u1EA1t \u0111\u1ED9ng, linh kh\xED d\xE0y \u0111\u1EB7c, c\xF3 nhi\u1EC1u t\xF4ng m\xF4n, y\xEAu th\xFA, di t\xEDch c\u1ED5 x\u01B0a. N\u01A0i b\u1EAFt \u0111\u1EA7u con \u0111\u01B0\u1EDDng tu ti\xEAn th\u1EF1c s\u1EF1.",
     levelRange: "30-80",
     areas: [
       { id: "area_thanh_van", name: "T\xF4ng m\xF4n Thanh V\xE2n", description: "Ch\xEDnh ph\xE1i l\u1EDBn \u2013 c\xF3 th\u1EC3 gia nh\u1EADp, h\u1ECDc ph\xE1p thu\u1EADt, nh\u1EADn nhi\u1EC7m v\u1EE5 t\xF4ng m\xF4n.", levelRange: "30-50", boss: "H\u1ED9 S\u01A1n K\u1EF3 L\xE2n", possibleWeather: ["Tr\u1EDDi Quang", "M\u01B0a R\xE0o"] },
       { id: "area_van_yeu_son", name: "V\u1EA1n Y\xEAu S\u01A1n", description: "N\xFAi y\xEAu th\xFA c\u01B0 ng\u1EE5 \u2013 b\u1EAFt linh th\xFA, thu ph\u1EE5c, hu\u1EA5n luy\u1EC7n.", levelRange: "40-60", monsters: ["H\u1ED3 Linh", "Lang V\u01B0\u01A1ng", "Th\u1EE7y X\xE0"], boss: "V\u1EA1n Y\xEAu V\u01B0\u01A1ng", possibleWeather: ["Tr\u1EDDi Quang", "S\u01B0\u01A1ng M\xF9"] },
       { id: "area_linh_tri", name: "V\u1EF1c Linh Tr\xEC", description: "H\u1ED3 ch\u1EE9a linh kh\xED \u2013 t\u0103ng t\u1ED1c tu luy\u1EC7n, c\xF3 boss canh gi\u1EEF.", levelRange: "50-70", monsters: ["Tinh Linh Th\u1EE7y N\u1EEF"], boss: "Th\u1EE7y M\u1EABu Th\xE1nh N\u1EEF" },
-      { id: "area_ma_vuc", name: "Th\xE0nh Ma V\u1EF1c", description: "N\u01A1i ma tu t\u1EE5 t\u1EADp \u2013 PvP t\u1EF1 do, k\u1ECBch b\u1EA3n ph\u1EA3n di\u1EC7n m\u1EA1nh.", levelRange: "60-80", boss: "Ma So\xE1i H\u1EAFc \xC1m", possibleWeather: ["Tr\u1EDDi Quang", "N\u1EAFng G\u1EAFt"] },
+      { id: "area_ma_vuc", name: "Th\xE0nh Ma V\u1EF1c", description: "N\u01A0i ma tu t\u1EE5 t\u1EADp \u2013 PvP t\u1EF1 do, k\u1ECBch b\u1EA3n ph\u1EA3n di\u1EC7n m\u1EA1nh.", levelRange: "60-80", boss: "Ma So\xE1i H\u1EAFc \xC1m", possibleWeather: ["Tr\u1EDDi Quang", "N\u1EAFng G\u1EAFt"] },
       { id: "area_ban_co", name: "Di t\xEDch B\xE0n C\u1ED5", description: "Di t\xEDch c\u1ED5 \u2013 xu\u1EA5t hi\u1EC7n k\u1EF3 ng\u1ED9, b\u1EA3o v\u1EADt, \u1EA9n ch\u1EE9a nguy hi\u1EC3m c\u1EF1c l\u1EDBn.", levelRange: "70+", monsters: ["L\xF4i Linh Nh\xE2n"], boss: "C\u1EF1 Th\u1EA7n B\xE0n C\u1ED5 T\xE0n H\u1ED3n", possibleWeather: ["Tr\u1EDDi Quang", "B\xE3o T\u1ED1"] }
     ]
   },
@@ -994,7 +947,7 @@ var WORLD_MAP_DATA = [
     areas: [
       { id: "area_thien_cung", name: "Thi\xEAn Cung", description: "Trung t\xE2m c\u1EE7a Ti\xEAn gi\u1EDBi \u2013 NPC thi\xEAn t\u01B0\u1EDBng, b\u1EA3ng x\u1EBFp h\u1EA1ng ti\xEAn \u0111\u1ED3.", levelRange: "80-100", npcs: ["Thi\xEAn t\u01B0\u1EDBng", "B\u1EA1ch Y Ti\xEAn T\u1EED"], possibleWeather: ["Tr\u1EDDi Quang"] },
       { id: "area_ngoc_hu", name: "Ng\u1ECDc H\u01B0 C\u1EA3nh", description: "C\u1EA3nh gi\u1EDBi tu luy\u1EC7n c\u1EF1c nhanh \u2013 c\u1EA7n \u0111i\u1EC1u ki\u1EC7n cao \u0111\u1EC3 v\xE0o.", levelRange: "90+" },
-      { id: "area_thien_loi", name: "Thi\xEAn L\xF4i V\u1EF1c", description: "N\u01A1i r\xE8n luy\u1EC7n \u0111\u1ED9 ki\u1EBFp \u2013 boss L\xF4i Th\u1EA7n, y\xEAu c\u1EA7u \u0111\u1ED9i nh\xF3m m\u1EA1nh.", levelRange: "100+", monsters: ["L\xF4i \u0110i\u1EC3u"], possibleWeather: ["B\xE3o T\u1ED1"] },
+      { id: "area_thien_loi", name: "Thi\xEAn L\xF4i V\u1EF1c", description: "N\u01A0i r\xE8n luy\u1EC7n \u0111\u1ED9 ki\u1EBFp \u2013 boss L\xF4i Th\u1EA7n, y\xEAu c\u1EA7u \u0111\u1ED9i nh\xF3m m\u1EA1nh.", levelRange: "100+", monsters: ["L\xF4i \u0110i\u1EC3u"], possibleWeather: ["B\xE3o T\u1ED1"] },
       { id: "area_linh_dien", name: "Linh \u0110i\u1EC7n C\u1EEDu Tr\u1ECDng", description: "9 t\u1EA7ng th\xE1p th\u1EED th\xE1ch \u2013 v\u01B0\u1EE3t c\xE0ng cao ph\u1EA7n th\u01B0\u1EDFng c\xE0ng l\u1EDBn.", levelRange: "110+", monsters: ["Linh H\u1EA7u C\u1ED5"] },
       { id: "area_van_mong", name: "\u0110\u1EA3o V\xE2n M\u1ED9ng", description: "Khu v\u1EF1c th\u01B0 gi\xE3n, c\xE2u c\xE1, h\u1EB9n h\xF2 \u0111\u1EA1o l\u1EEF, m\u1EDF kh\xF3a k\u1EF9 n\u0103ng \u0111\xF4i.", levelRange: "120+", possibleWeather: ["Tr\u1EDDi Quang", "M\u01B0a R\xE0o"] },
       { id: "area_than_moc", name: "Th\u1EA7n M\u1ED9c Vi\u1EC5n C\u1ED5", description: "\u0110\u1EA1i th\u1EE5 c\u1ED5 \u2013 ch\u1EE9a \u0111\u1EF1ng truy\u1EC1n th\u1EEBa Ti\xEAn Nh\xE2n th\u1EA5t l\u1EA1c.", levelRange: "130+", monsters: ["C\u1EF1 M\u1ED9c H\u1ED9 V\u1EC7"] }
@@ -1007,4 +960,149 @@ var WORLD_MAP_DATA = [
     levelRange: "120+",
     areas: [
       { id: "area_hac_phong", name: "H\u1EAFc Phong Tr\xEC", description: "Linh kh\xED \xE2m t\xE0 \u2013 luy\u1EC7n ma c\xF4ng, ch\u1EBF t\u1EA1o ph\xE1p b\u1EA3o t\xE0n \u0111\u1ED9c.", levelRange: "120+", monsters: ["Qu\u1EF7 Huy\u1EBFt N\xF4"] },
-      { id: "area_huyet_hai", name: "Huy\u1EBFt H\u1EA3i V\xF4 Bi\xEAn", description: "Bi\u1EC3n m\xE1u \u2013 m\u1ED7i l\u1EA7n ch\u1EBFt \u1EDF \u0111\xE2y s\u1EBD t\u0103ng 's\xE1t kh\xED', m\u1EDF kh\xF3a k\u1EF9 n
+      { id: "area_huyet_hai", name: "Huy\u1EBFt H\u1EA3i V\xF4 Bi\xEAn", description: "Bi\u1EC3n m\xE1u \u2013 m\u1ED7i l\u1EA7n ch\u1EBFt \u1EDF \u0111\xE2y s\u1EBD t\u0103ng 's\xE1t kh\xED', m\u1EDF kh\xF3a k\u1EF9 n\u0103ng ma \u0111\u1EA1o.", levelRange: "130+", monsters: ["Ma Ng\u01B0"] },
+      { id: "area_phong_an", name: "Phong \u1EA4n C\u1ED5 T\xF4ng", description: "Di t\xEDch ma t\xF4ng \u2013 b\u1ECB phong \u1EA5n, c\u1EA7n ph\xE1 gi\u1EA3i \u0111\u1EC3 nh\u1EADn truy\u1EC1n th\u1EEBa.", levelRange: "140+", monsters: ["U Linh Qu\xE2n"] },
+      { id: "area_co_mo", name: "C\u1ED5 M\u1ED9 U Linh", description: "Khu m\u1ED9 c\u1EE7a ma th\u1EA7n \u2013 boss m\u1EA1nh, t\u1EF7 l\u1EC7 r\u1EDBt \u0111\u1ED3 truy\u1EC1n thuy\u1EBFt cao.", levelRange: "150+", monsters: ["Ma Th\u1EA7n B\u1EA5t T\u1EED"] },
+      { id: "area_ma_de", name: "L\xE3nh \u0110\u1ECBa Ma \u0110\u1EBF", description: "Th\xE0nh tr\xEC cu\u1ED1i c\xF9ng \u2013 n\u01A0i \u0111\u1EB7t t\u1ED5ng h\xE0nh dinh c\u1EE7a Ma gi\u1EDBi.", levelRange: "160+" }
+    ]
+  },
+  {
+    id: "realm_than_gioi",
+    name: "Th\u1EA7n Gi\u1EDBi",
+    description: "Th\u1EBF gi\u1EDBi c\u1EE7a nh\u1EEFng k\u1EBB v\u01B0\u1EE3t kh\u1ECFi thi\xEAn \u0111\u1EA1o, si\xEAu vi\u1EC7t, \xEDt ng\u01B0\u1EDDi t\u1EEBng \u0111\u1EA1t t\u1EDBi.",
+    levelRange: "150+",
+    areas: [
+      { id: "area_hu_khong_mon", name: "H\u01B0 Kh\xF4ng Chi M\xF4n", description: "C\u1ED5ng v\xE0o \u2013 y\xEAu c\u1EA7u 'Ph\xE1 Thi\xEAn L\u1EC7nh' \u0111\u1EC3 m\u1EDF.", levelRange: "160+" },
+      { id: "area_dien_than_hu", name: "\u0110i\u1EC7n Th\u1EA7n H\u01B0", description: "N\u01A0i c\xE1c \u201CTh\u1EA7n tu\u201D tu luy\u1EC7n \u2013 y\xEAu c\u1EA7u tinh th\xF4ng c\u1EA3 ma & ti\xEAn ph\xE1p.", levelRange: "170+" },
+      { id: "area_huyen_canh", name: "Huy\u1EC5n C\u1EA3nh Lu\xE2n H\u1ED3i", description: "C\u1EA3nh gi\u1EDBi \u1EA3o t\u01B0\u1EDFng \u2013 cho ph\xE9p quay l\u1EA1i qu\xE1 kh\u1EE9, thay \u0111\u1ED5i quy\u1EBFt \u0111\u1ECBnh.", levelRange: "180+", monsters: ["\u1EA2nh Th\xE2n", "Huy\u1EC5n Th\xFA"] },
+      { id: "area_canh_tan_than", name: "C\u1EA3nh T\xE0n Th\u1EA7n", description: "Chi\u1EBFn tr\u01B0\u1EDDng th\u1EA7n gi\u1EDBi \u2013 PvP c\u1EA5p cao, tranh \u0111o\u1EA1t b\u1EA3o v\u1EADt th\u1EA7n th\xE1nh.", levelRange: "190+" },
+      { id: "area_long_dien", name: "Long \u0110i\u1EC7n", description: "Trung t\xE2m Th\u1EA7n Gi\u1EDBi, t\u1ECDa l\u1EA1c gi\u1EEFa Bi\u1EC3n V\u0129nh Th\u1EE7y, n\u01A0i Ch\xFAng Long Chi Ch\u1EE7 ng\u1EF1 tr\u1ECB.", levelRange: "150+", npcs: [], monsters: [], boss: "B\u1EA1ch Thi\xEAn Huy\xEAn", possibleWeather: ["Tr\u1EDDi Quang", "M\u01B0a R\xE0o"] }
+    ]
+  }
+];
+
+// data/weatherData.ts
+const WEATHER_ICONS = {
+  "Tr\u1EDDi Quang": "\u2600\uFE0F",
+  "N\u1EAFng G\u1EAFt": "\uD83E\uDD75",
+  "M\u01B0a R\xE0o": "\uD83C\uDF27\uFE0F",
+  "S\u01B0\u01A1ng M\xF9": "\uD83C\uDF2B\uFE0F",
+  "B\xE3o T\u1ED1": "\u26C8\uFE0F"
+};
+const WEATHER_DATA = {
+  "Tr\u1EDDi Quang": {
+    description: "B\u1EA7u tr\u1EDDi trong xanh, kh\xF4ng m\xE2y. \u0110i\u1EC1u ki\u1EC7n l\xFD t\u01B0\u1EDFng."
+  },
+  "N\u1EAFng G\u1EAFt": {
+    description: "M\u1EB7t tr\u1EDDi thi\xEAu \u0111\u1ED1t, kh\xF4ng kh\xED n\xF3ng nh\u01B0 l\u1EEDa. G\xE2y b\u1EA5t l\u1EE3i cho sinh v\u1EADt h\u1EC7 B\u0103ng, tr\u1EE3 l\u1EF1c cho h\u1EC7 H\u1ECFa.",
+    combat: {
+      elementalBoost: { type: "H\u1ECFa", multiplier: 1.2 },
+      elementalWeaken: { type: "B\u0103ng", multiplier: 0.8 }
+    },
+    world: {
+      hpDrain: 1
+    }
+  },
+  "M\u01B0a R\xE0o": {
+    description: "M\u01B0a l\u1EDBn tr\xFAt xu\u1ED1ng, l\xE0m d\u1ECBu \u0111i kh\xF4ng kh\xED. Tr\u1EE3 l\u1EF1c cho h\u1EC7 Th\u1EE7y, kh\u1EAFc ch\u1EBF h\u1EC7 H\u1ECFa.",
+    combat: {
+      elementalBoost: { type: "Th\u1EE7y", multiplier: 1.2 },
+      elementalWeaken: { type: "H\u1ECFa", multiplier: 0.8 }
+    }
+  },
+  "S\u01B0\u01A1ng M\xF9": {
+    description: "S\u01B0\u01A1ng m\xF9 d\xE0y \u0111\u1EB7c, t\u1EA7m nh\xECn b\u1ECB h\u1EA1n ch\u1EBF. T\u1EA5t c\u1EA3 \u0111\xF2n t\u1EA5n c\xF4ng \u0111\u1EC1u kh\xF3 tr\xFAng \u0111\xEDch h\u01A1n.",
+    combat: {
+      accuracyModifier: -0.15
+    }
+  },
+  "B\xE3o T\u1ED1": {
+    description: "S\u1EA5m ch\u1EDBp r\u1EC1n vang, gi\xF3 gi\u1EADt m\u1EA1nh. Tr\u1EE3 l\u1EF1c c\u1EF1c m\u1EA1nh cho h\u1EC7 L\xF4i, nh\u01B0ng c\u0169ng g\xE2y kh\xF3 kh\u0103n cho vi\u1EC7c t\u1EA5n c\xF4ng.",
+    combat: {
+      elementalBoost: { type: "L\xF4i", multiplier: 1.3 },
+      accuracyModifier: -0.1
+    }
+  }
+};
+
+// data/alchemyData.ts
+const getAlchemyRankInfo = (level) => {
+  if (level >= 51)
+    return { name: "Ch\xED T\xF4n Luy\u1EC7n \u0110an S\u01B0", successBonus: 0.35, materialSaveChance: 0.25, perk: "C\xF3 th\u1EC3 t\u1EA1o \u0111an mang linh tr\xED" };
+  if (level >= 41)
+    return { name: "\u0110\u1EA1i t\xF4ng s\u01B0 luy\u1EC7n \u0111an", successBonus: 0.3, materialSaveChance: 0.2, perk: "C\xF3 th\u1EC3 luy\u1EC7n \u0111an bi\u1EBFn d\u1ECB" };
+  if (level >= 31)
+    return { name: "T\xF4ng s\u01B0 luy\u1EC7n \u0111an", successBonus: 0.25, materialSaveChance: 0.15, perk: "C\xF3 th\u1EC3 truy\u1EC1n c\xF4ng th\u1EE9c" };
+  if (level >= 21)
+    return { name: "Cao c\u1EA5p luy\u1EC7n \u0111an s\u0129", successBonus: 0.2, materialSaveChance: 0.1, perk: "Nh\u1EADn th\xEAm ph\u1EA9m ch\u1EA5t \u0111an ng\u1EABu nhi\xEAn" };
+  if (level >= 11)
+    return { name: "Trung c\u1EA5p luy\u1EC7n \u0111an s\u01B0", successBonus: 0.15, materialSaveChance: 0.05, perk: "C\xF3 th\u1EC3 luy\u1EC7n \u0111an h\u1ED7 tr\u1EE3 chi\u1EBFn \u0111\u1EA5u" };
+  if (level >= 1)
+    return { name: "S\u01A1 c\u1EA5p luy\u1EC7n \u0111an s\u01B0", successBonus: 0.1, materialSaveChance: 0, perk: "T\u0103ng nh\u1EB9 t\u1EC9 l\u1EC7 th\xE0nh c\xF4ng" };
+  return { name: "H\u1ECDc \u0111\u1ED3 luy\u1EC7n \u0111an", successBonus: 0, materialSaveChance: 0, perk: "C\xF3 th\u1EC3 luy\u1EC7n \u0111an c\u01A1 b\u1EA3n" };
+};
+
+// services/geminiService.ts
+const shuffleArray = (array) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
+const generateRandomSpiritRoot = () => {
+  const rand = Math.random() * 100;
+  let classificationId;
+  if (rand < 1) {
+    classificationId = "bien_di";
+  } else if (rand < 6) {
+    classificationId = "thien";
+  } else if (rand < 26) {
+    classificationId = "song";
+  } else if (rand < 56) {
+    classificationId = "tam";
+  } else if (rand < 81) {
+    classificationId = "tu";
+  } else {
+    classificationId = "ngu";
+  }
+  const classification = SPIRIT_ROOT_CLASSIFICATIONS.find((c) => c.id === classificationId);
+  let attributes = [];
+  const NORMAL_ATTRIBUTES = ["Kim", "M\u1ED9c", "Th\u1EE7y", "H\u1ECFa", "Th\u1ED5"];
+  const MUTATED_ATTRIBUTES = ["Phong", "L\xF4i", "B\u0103ng"];
+  switch (classificationId) {
+    case "ngu":
+      attributes = NORMAL_ATTRIBUTES;
+      break;
+    case "tu":
+      attributes = shuffleArray(NORMAL_ATTRIBUTES).slice(0, 4);
+      break;
+    case "tam":
+      attributes = shuffleArray(NORMAL_ATTRIBUTES).slice(0, 3);
+      break;
+    case "song":
+      attributes = shuffleArray(NORMAL_ATTRIBUTES).slice(0, 2);
+      break;
+    case "thien":
+      attributes = [NORMAL_ATTRIBUTES[Math.floor(Math.random() * NORMAL_ATTRIBUTES.length)]];
+      break;
+    case "bien_di":
+      const subRand = Math.random() * 100;
+      if (subRand < 5) {
+        attributes = shuffleArray(MUTATED_ATTRIBUTES).slice(0, 2);
+      } else if (subRand < 30) {
+        attributes.push(MUTATED_ATTRIBUTES[Math.floor(Math.random() * MUTATED_ATTRIBUTES.length)]);
+        attributes.push(NORMAL_ATTRIBUTES[Math.floor(Math.random() * NORMAL_ATTRIBUTES.length)]);
+      } else {
+        attributes.push(MUTATED_ATTRIBUTES[Math.floor(Math.random() * MUTATED_ATTRIBUTES.length)]);
+      }
+      break;
+  }
+  return {
+    classificationId: classification.id,
+    attributes: attributes.filter((value, index, self) => self.indexOf(value) === index),
+    multiplier: classification.expMultiplier
+  };
+};
+async function call
