@@ -1,57 +1,10 @@
-const CACHE_NAME = 'huyen-gioi-tu-tien-v1.1';
+const CACHE_NAME = 'huyen-gioi-tu-tien-v1.2';
 const urlsToCache = [
   './',
   './index.html',
-  './index.tsx',
-  './metadata.json',
-  './types.ts',
-  './constants.ts',
-  './utils/audio.ts',
-  './services/geminiService.ts',
-  './data/gameData.ts',
-  './data/worldMapData.ts',
-  './data/cultivationAreasData.ts',
-  './data/mainStoryQuests.ts',
-  './data/spiritRootData.ts',
-  './data/spiritRootClassification.ts',
-  './data/weatherData.ts',
-  './data/titleAdventures.ts',
-  './data/alchemyData.ts',
-  './components/ActivityLogPanel.tsx',
-  './components/AddNewMonsterModal.tsx',
-  './components/AdminPanel.tsx',
-  './components/AreaDetailPanel.tsx',
-  './components/BattleScreen.tsx',
-  './components/BlacksmithPanel.tsx',
-  './components/BottomNavBar.tsx',
-  './components/CharacterCreationScreen.tsx',
-  './components/CharacterDetailPopup.tsx',
-  './components/CharacterPanel.tsx',
-  './components/CombatEffect.tsx',
-  './components/CompanionEquipModal.tsx',
-  './components/CompanionPanel.tsx',
-  './components/CultivationAreasPanel.tsx',
-  './components/CultivationPanel.tsx',
-  './components/FormationPanel.tsx',
-  './components/IconComponents.tsx',
-  './components/ImageRepositoryPanel.tsx',
-  './components/ImageSelectorModal.tsx',
-  './components/InventoryPanel.tsx',
-  './components/MainContentArea.tsx',
-  './components/MiniMap.tsx',
-  './components/NpcDetailModal.tsx',
-  './components/QuestPanel.tsx',
-  './components/SettingsPanel.tsx',
-  './components/SkillDisplay.tsx',
-  './components/StatusBar.tsx',
-  './components/StorePanel.tsx',
-  './components/WeatherDisplay.tsx',
-  './components/WorldMapPanel.tsx',
-  './components/AlchemyPanel.tsx',
-  './components/AdventurePanel.tsx',
-  './components/LinhDiaExplorationPanel.tsx',
-  './App.tsx',
-  'https://img.freepik.com/free-photo/glowing-spaceship-orbits-planet-starry-galaxy-generated-by-ai_188544-9655.jpg'
+  './bundle.js',
+  './manifest.json',
+  './vite.svg'
 ];
 
 self.addEventListener('install', event => {
@@ -66,12 +19,20 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // We only handle GET requests, POST requests to /api/gemini should not be cached.
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
         if (response) {
           return response;
         }
+        
+        // For requests not in cache, fetch them from the network.
+        // We don't cache them on the fly to avoid caching API responses or other dynamic content.
         return fetch(event.request);
       })
   );
