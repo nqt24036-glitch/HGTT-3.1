@@ -139,8 +139,14 @@
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./bundle.js"></script>
     <script>
+      // Dynamically load the main bundle to prevent Vercel's build analysis from parsing it.
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = './bundle.js';
+      document.body.appendChild(script);
+
+      // Register service worker
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./sw.js').then(registration => {
