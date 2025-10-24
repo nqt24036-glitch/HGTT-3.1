@@ -1,13 +1,12 @@
-import { GoogleGenAI, Type } from "@google/genai";
-// FIX: Added AdventureStorylet to imports to support the new adventure generation feature.
+// MODIFIED: This file is updated to call a serverless function proxy instead of the Gemini API directly.
+// This is a CRITICAL security measure to protect the API key.
+
+// FIX: Added .ts extension to import path.
 import { WorldMapArea, Player, Quest, NpcDialogue, NPC, PlayerSpiritRoot, SpiritRootType, SpiritRootClassificationId, AdventureStorylet } from '../types.ts';
-import { MONSTERS, ITEM_LIST } from '../data/gameData.ts';
+import { ITEM_LIST } from '../data/gameData.ts';
 import { SPIRIT_ROOT_CLASSIFICATIONS } from '../data/spiritRootClassification.ts';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
-const NORMAL_ATTRIBUTES: SpiritRootType[] = ['Kim', 'Mộc', 'Thủy', 'Hỏa', 'Thổ'];
-const MUTATED_ATTRIBUTES: SpiritRootType[] = ['Phong', 'Lôi', 'Băng'];
+// The GoogleGenAI client is now initialized on the server, not here.
 
 // Function to shuffle an array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -19,7 +18,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return newArray;
 };
 
-// Generate a random Spirit Root based on weighted probabilities
+// Generate a random Spirit Root based on weighted probabilities (this function runs on client, it's fine)
 export const generateRandomSpiritRoot = (): PlayerSpiritRoot => {
     const rand = Math.random() * 100;
     let classificationId: SpiritRootClassificationId;
@@ -40,6 +39,8 @@ export const generateRandomSpiritRoot = (): PlayerSpiritRoot => {
 
     const classification = SPIRIT_ROOT_CLASSIFICATIONS.find(c => c.id === classificationId)!;
     let attributes: SpiritRootType[] = [];
+    const NORMAL_ATTRIBUTES: SpiritRootType[] = ['Kim', 'Mộc', 'Thủy', 'Hỏa', 'Thổ'];
+    const MUTATED_ATTRIBUTES: SpiritRootType[] = ['Phong', 'Lôi', 'Băng'];
 
     switch (classificationId) {
         case 'ngu':
@@ -77,109 +78,77 @@ export const generateRandomSpiritRoot = (): PlayerSpiritRoot => {
     };
 };
 
-const questSchema = {
-  type: Type.OBJECT,
-  properties: {
-    id: { type: Type.STRING, description: "Một ID độc nhất cho nhiệm vụ, ví dụ: quest_npc_162534" },
-    title: { type: Type.STRING, description: "Một tiêu đề ngắn gọn, hấp dẫn cho nhiệm vụ." },
-    description: { type: Type.STRING, description: "Mô tả chi tiết về nhiệm vụ, bao gồm bối cảnh và yêu cầu." },
-    progress: { type: Type.INTEGER, description: "Tiến độ ban đầu, luôn là 0." },
-    target: { type: Type.INTEGER, description: "Mục tiêu cần đạt được (ví dụ: số lượng quái vật cần tiêu diệt)." },
-    reward: { type: Type.STRING, description: "Mô tả phần thưởng khi hoàn thành nhiệm vụ (ví dụ: '100 EXP, 50 Linh Thạch')." },
-    rewardObject: {
-      type: Type.OBJECT,
-      description: "Phần thưởng có cấu trúc để game xử lý.",
-      properties: {
-        characterExp: { type: Type.INTEGER, description: "Lượng kinh nghiệm nhân vật." },
-        cultivationExp: { type: Type.INTEGER, description: "Lượng kinh nghiệm tu vi (linh lực)." },
-        linhThach: { type: Type.INTEGER, description: "Số lượng linh thạch." },
-        itemId: { type: Type.STRING, description: "ID của vật phẩm thưởng (nếu có)." }
-      }
-    },
-    objective: {
-      type: Type.OBJECT,
-      description: "Mục tiêu có cấu trúc của nhiệm vụ.",
-      properties: {
-        type: {
-          type: Type.STRING,
-          description: "Loại mục tiêu: 'kill' (giết quái), 'collect' (thu thập vật phẩm), hoặc 'talk' (nói chuyện với NPC)."
+// Generic function to call our backend proxy
+async function callGeminiProxy(payload: object): Promise<any> {
+    const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
-        targetName: {
-          type: Type.STRING,
-          description: "Tên của mục tiêu. Ví dụ: 'Dã Lang' cho kill, 'Da Sói' cho collect, 'Thợ rèn' cho talk. Phải khớp với một trong các tên được cung cấp trong bối cảnh."
-        },
-        itemId: { type: Type.STRING, description: "ID của vật phẩm cần thu thập. Chỉ điền trường này nếu type là 'collect'." }
-      },
-      required: ["type", "targetName"]
-    }
-  },
-  required: ["id", "title", "description", "progress", "target", "reward", "objective", "rewardObject"]
-};
+        body: JSON.stringify(payload),
+    });
 
-const dialogueSchema = {
-    type: Type.OBJECT,
-    properties: {
-        greeting: { type: Type.STRING, description: "Một lời chào ngắn gọn, phù hợp với tính cách của NPC." },
-        options: {
-            type: Type.ARRAY,
-            description: "Một danh sách các lựa chọn đối thoại cho người chơi. Luôn bao gồm 'quest' và 'leave'.",
-            items: {
-                type: Type.OBJECT,
-                properties: {
-                    id: { type: Type.STRING, description: "Loại lựa chọn: 'quest', 'about_area', 'rumors', 'trade', 'leave', 'appraise_spirit_root'." },
-                    text: { type: Type.STRING, description: "Nội dung lựa chọn hiển thị cho người chơi (ví dụ: 'Hỏi về nhiệm vụ', 'Có tin đồn gì không?')." },
-                    response: { type: Type.STRING, description: "Câu trả lời của NPC nếu lựa chọn không phải là 'quest' hoặc 'trade'. Ngắn gọn và phù hợp." }
-                },
-                required: ["id", "text"]
-            }
-        }
-    },
-    required: ["greeting", "options"]
-};
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'API call failed');
+    }
+
+    return response.json();
+}
 
 
 export const generateQuest = async (npc: string, area: WorldMapArea, player: Player, allNpcs: NPC[]): Promise<Quest | null> => {
-  const availableMonsters = area.monsters?.filter(m => m !== 'Không có (thành an toàn)') || [];
-  const monsterList = availableMonsters.length > 0 ? availableMonsters.join(', ') : 'không có yêu thú nào';
+    // These schemas now live on the server, but we define them here to know what to send.
+    // In a real production app with a build system, you'd share types between frontend/backend.
+    const questSchema = {
+      type: 'OBJECT', // Using strings since we don't have the `Type` enum
+      properties: {
+        id: { type: 'STRING' }, title: { type: 'STRING' }, description: { type: 'STRING' },
+        progress: { type: 'INTEGER' }, target: { type: 'INTEGER' }, reward: { type: 'STRING' },
+        rewardObject: {
+          type: 'OBJECT', properties: { characterExp: { type: 'INTEGER' }, cultivationExp: { type: 'INTEGER' }, linhThach: { type: 'INTEGER' }, itemId: { type: 'STRING' } }
+        },
+        objective: {
+          type: 'OBJECT', properties: { type: { type: 'STRING' }, targetName: { type: 'STRING' }, itemId: { type: 'STRING' } }, required: ["type", "targetName"]
+        }
+      },
+      required: ["id", "title", "description", "progress", "target", "reward", "objective", "rewardObject"]
+    };
+
+    const availableMonsters = area.monsters?.filter(m => m !== 'Không có (thành an toàn)') || [];
+    const monsterList = availableMonsters.length > 0 ? availableMonsters.join(', ') : 'không có yêu thú nào';
+    const otherNpcsInArea = allNpcs.filter(n => n.currentAreaId === area.id && n.name !== npc);
+    const otherNpcs = otherNpcsInArea.length > 0 ? otherNpcsInArea.map(n => n.name).join(', ') : 'không có ai khác';
+    const availableCollectibles = ITEM_LIST.filter(i => i.type === 'Nguyên liệu');
+    const collectableItems = availableCollectibles.length > 0 ? availableCollectibles.map(i => `${i.name} (id: ${i.id})`).join('; ') : 'không có vật phẩm nào';
+    const rewardableItems = ITEM_LIST.filter(i => ['Nguyên liệu', 'Tiêu hao', 'Sách Kỹ Năng'].includes(i.type)).map(i => `${i.name} (id: ${i.id})`).join('; ');
+    const possibleQuestTypes = [];
+    if (availableMonsters.length > 0) possibleQuestTypes.push("'kill'");
+    if (availableCollectibles.length > 0) possibleQuestTypes.push("'collect'");
+    if (otherNpcsInArea.length > 0) possibleQuestTypes.push("'talk'");
+
+    if (possibleQuestTypes.length === 0) {
+        console.warn(`No possible quest types for NPC ${npc} in area ${area.name}.`);
+        return null;
+    }
+
+    const questTypesString = possibleQuestTypes.join(', ');
   
-  const otherNpcsInArea = allNpcs.filter(n => n.currentAreaId === area.id && n.name !== npc);
-  const otherNpcs = otherNpcsInArea.length > 0 ? otherNpcsInArea.map(n => n.name).join(', ') : 'không có ai khác';
-  
-  const availableCollectibles = ITEM_LIST.filter(i => i.type === 'Nguyên liệu');
-  const collectableItems = availableCollectibles.length > 0 
-    ? availableCollectibles.map(i => `${i.name} (id: ${i.id})`).join('; ')
-    : 'không có vật phẩm nào';
-    
-  const rewardableItems = ITEM_LIST.filter(i => ['Nguyên liệu', 'Tiêu hao', 'Sách Kỹ Năng'].includes(i.type)).map(i => `${i.name} (id: ${i.id})`).join('; ');
+    const prompt = `Tạo một nhiệm vụ ngắn trong bối cảnh thế giới tu tiên huyền huyễn cho một người chơi, tuân thủ nghiêm ngặt các yêu cầu về cấu trúc dữ liệu.
 
-  // Determine possible quest types based on context
-  const possibleQuestTypes = [];
-  if (availableMonsters.length > 0) possibleQuestTypes.push("'kill'");
-  if (availableCollectibles.length > 0) possibleQuestTypes.push("'collect'");
-  if (otherNpcsInArea.length > 0) possibleQuestTypes.push("'talk'");
+    Bối cảnh:
+    - Người chơi: ${player.name}, Cấp ${player.level}, thuộc phái ${player.sect}.
+    - Địa điểm: ${area.name} (${area.description}).
+    - NPC giao nhiệm vụ: ${npc}.
+    - Các yêu thú có thể có trong khu vực (dùng cho nhiệm vụ 'kill'): ${monsterList}.
+    - Các vật phẩm có thể thu thập (dùng cho nhiệm vụ 'collect'): ${collectableItems}.
+    - Các NPC khác trong khu vực (dùng cho nhiệm vụ 'talk'): ${otherNpcs}.
+    - Các vật phẩm có thể làm phần thưởng: ${rewardableItems}.
 
-  if (possibleQuestTypes.length === 0) {
-      console.warn(`No possible quest types for NPC ${npc} in area ${area.name}.`);
-      return null; // Cannot generate a quest if there are no valid objectives.
-  }
-
-  const questTypesString = possibleQuestTypes.join(', ');
-  
-  const prompt = `Tạo một nhiệm vụ ngắn trong bối cảnh thế giới tu tiên huyền huyễn cho một người chơi, tuân thủ nghiêm ngặt các yêu cầu về cấu trúc dữ liệu.
-
-  Bối cảnh:
-  - Người chơi: ${player.name}, Cấp ${player.level}, thuộc phái ${player.sect}.
-  - Địa điểm: ${area.name} (${area.description}).
-  - NPC giao nhiệm vụ: ${npc}.
-  - Các yêu thú có thể có trong khu vực (dùng cho nhiệm vụ 'kill'): ${monsterList}.
-  - Các vật phẩm có thể thu thập (dùng cho nhiệm vụ 'collect'): ${collectableItems}.
-  - Các NPC khác trong khu vực (dùng cho nhiệm vụ 'talk'): ${otherNpcs}.
-  - Các vật phẩm có thể làm phần thưởng: ${rewardableItems}.
-
-  Yêu cầu CỐ ĐỊNH (phải tuân theo):
-  1.  **Nội dung**: Tạo một nhiệm vụ phù hợp với bối cảnh. Lời thoại của NPC (${npc}) phải được tích hợp vào phần mô tả nhiệm vụ.
-  2.  **Loại nhiệm vụ**: Dựa vào bối cảnh, hãy chọn một loại nhiệm vụ từ danh sách sau: ${questTypesString}. Đừng tạo nhiệm vụ loại 'kill' nếu không có yêu thú, 'collect' nếu không có vật phẩm, hoặc 'talk' nếu không có NPC khác.
-  3.  **Cấu trúc dữ liệu**:
+    Yêu cầu CỐ ĐỊNH (phải tuân theo):
+    1.  **Nội dung**: Tạo một nhiệm vụ phù hợp với bối cảnh. Lời thoại của NPC (${npc}) phải được tích hợp vào phần mô tả nhiệm vụ.
+    2.  **Loại nhiệm vụ**: Dựa vào bối cảnh, hãy chọn một loại nhiệm vụ từ danh sách sau: ${questTypesString}. Đừng tạo nhiệm vụ loại 'kill' nếu không có yêu thú, 'collect' nếu không có vật phẩm, hoặc 'talk' nếu không có NPC khác.
+    3.  **Cấu trúc dữ liệu**:
       *   \\\`id\\\`: Chuỗi ngẫu nhiên độc nhất (ví dụ: quest_thotren_12345).
       *   \\\`progress\\\`: Luôn là số 0.
       *   \\\`target\\\`: Một con số hợp lý (ví dụ: 5 cho kill/collect, 1 cho talk).
@@ -193,29 +162,38 @@ export const generateQuest = async (npc: string, area: WorldMapArea, player: Pla
           *   Nếu có vật phẩm thưởng, \\\`itemId\\\` phải là một trong các ID đã được cung cấp trong danh sách vật phẩm.
           *   Ví dụ: Nếu \\\`reward\\\` là "150 EXP Tu Luyện, 75 Linh Thạch, 1x Da Sói", thì \\\`rewardObject\\\` phải là \\\`{ "cultivationExp": 150, "linhThach": 75, "itemId": "item_005" }\\\`.`;
 
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: questSchema,
-        temperature: 0.8,
-      }
-    });
-    
-    const jsonText = response.text.trim();
-    return JSON.parse(jsonText) as Quest;
-  } catch (error) {
-    console.error("Error generating quest:", error);
-    return null;
-  }
+    try {
+        const data = await callGeminiProxy({ prompt, schema: questSchema });
+        return data as Quest;
+    } catch (error) {
+        console.error("Error generating quest via proxy:", error);
+        return null;
+    }
 };
 
 export const generateNpcDialogue = async (npc: NPC, area: WorldMapArea, player: Player): Promise<NpcDialogue | null> => {
+    const dialogueSchema = {
+        type: 'OBJECT',
+        properties: {
+            greeting: { type: 'STRING' },
+            options: {
+                type: 'ARRAY',
+                items: {
+                    type: 'OBJECT',
+                    properties: {
+                        id: { type: 'STRING' },
+                        text: { type: 'STRING' },
+                        response: { type: 'STRING' }
+                    },
+                    required: ["id", "text"]
+                }
+            }
+        },
+        required: ["greeting", "options"]
+    };
+
     const isMerchant = npc.name.includes('Thợ rèn') || npc.name.includes('Thương nhân');
     const tradeOptionInstruction = isMerchant ? "Bao gồm một lựa chọn 'trade' với text 'Giao dịch / Xem hàng'." : "Không bao gồm lựa chọn 'trade'.";
-
     const isAppraiser = npc.name.includes('Yến Tử Nguyệt');
     let appraiserInstruction = "";
     if (isAppraiser) {
@@ -244,79 +222,62 @@ export const generateNpcDialogue = async (npc: NPC, area: WorldMapArea, player: 
     8.  Tất cả nội dung phải bằng tiếng Việt.`;
 
     try {
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: {
-                responseMimeType: "application/json",
-                responseSchema: dialogueSchema,
-                temperature: 0.8,
-            }
-        });
-
-        const jsonText = response.text.trim();
-        const dialogue = JSON.parse(jsonText) as NpcDialogue;
-
-        // Ensure 'leave' option is present
+        const dialogue = await callGeminiProxy({ prompt, schema: dialogueSchema }) as NpcDialogue;
         if (!dialogue.options.some(opt => opt.id === 'leave')) {
             dialogue.options.push({ id: 'leave', text: 'Tạm biệt.' });
         }
-        
         return dialogue;
     } catch (error) {
-        console.error("Error generating NPC dialogue:", error);
+        console.error("Error generating NPC dialogue via proxy:", error);
         return null;
     }
 };
-// FIX: Implement and export generateAdventureStorylet to resolve module resolution error.
-const adventureStoryletSchema = {
-    type: Type.OBJECT,
-    properties: {
-      title: { type: Type.STRING, description: 'Tiêu đề ngắn gọn, hấp dẫn cho cuộc phiêu lưu.' },
-      startStepId: { type: Type.STRING, description: 'ID của bước bắt đầu, thường là "start".' },
-      steps: {
-        type: Type.ARRAY,
-        description: 'Một danh sách các bước trong cuộc phiêu lưu, từ 3 đến 5 bước.',
-        items: {
-          type: Type.OBJECT,
-          properties: {
-            id: { type: Type.STRING, description: 'ID độc nhất cho bước này (ví dụ: "start", "choice1_result").' },
-            description: { type: Type.STRING, description: 'Mô tả tình huống mà người chơi gặp phải ở bước này.' },
-            choices: {
-              type: Type.ARRAY,
-              description: 'Từ 2 đến 4 lựa chọn cho người chơi.',
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  text: { type: Type.STRING, description: 'Nội dung lựa chọn hiển thị cho người chơi.' },
-                  outcome: {
-                    type: Type.OBJECT,
-                    description: 'Kết quả của lựa chọn.',
+
+export const generateAdventureStorylet = async (): Promise<AdventureStorylet | null> => {
+      const adventureStoryletSchema = {
+        type: 'OBJECT',
+        properties: {
+          title: { type: 'STRING' },
+          startStepId: { type: 'STRING' },
+          steps: {
+            type: 'ARRAY',
+            items: {
+              type: 'OBJECT',
+              properties: {
+                id: { type: 'STRING' },
+                description: { type: 'STRING' },
+                choices: {
+                  type: 'ARRAY',
+                  items: {
+                    type: 'OBJECT',
                     properties: {
-                      type: { type: Type.STRING, description: "Loại kết quả: 'continue', 'battle', 'reward', 'end'." },
-                      nextStepId: { type: Type.STRING, description: 'ID của bước tiếp theo nếu type là "continue".' },
-                      monsterName: { type: Type.STRING, description: `Tên của quái vật nếu type là "battle". Phải là một trong những tên sau: ${['Chuột Đói', 'Chó Hoang', 'Nhện Độc', 'Hổ Vằn Lửa Rừng', 'Linh Thạch Nhân', 'Ma Ảnh Linh Hồn'].join(', ')}.` },
-                      rewardDescription: { type: Type.STRING, description: 'Mô tả phần thưởng nếu type là "reward".' },
-                      rewardExp: { type: Type.INTEGER, description: 'Lượng kinh nghiệm thưởng.' },
-                      rewardLinhThach: { type: Type.INTEGER, description: 'Lượng linh thạch thưởng.' },
-                      rewardItemId: { type: Type.STRING, description: 'ID của vật phẩm thưởng (nếu có).' },
-                      rewardTitle: { type: Type.STRING, description: 'Danh hiệu thưởng (nếu có).' },
+                      text: { type: 'STRING' },
+                      outcome: {
+                        type: 'OBJECT',
+                        properties: {
+                          type: { type: 'STRING' },
+                          nextStepId: { type: 'STRING' },
+                          monsterName: { type: 'STRING' },
+                          rewardDescription: { type: 'STRING' },
+                          rewardExp: { type: 'INTEGER' },
+                          rewardLinhThach: { type: 'INTEGER' },
+                          rewardItemId: { type: 'STRING' },
+                          rewardTitle: { type: 'STRING' },
+                        },
+                        required: ['type']
+                      }
                     },
-                    required: ['type']
+                    required: ['text', 'outcome']
                   }
-                },
-                required: ['text', 'outcome']
-              }
+                }
+              },
+              required: ['id', 'description', 'choices']
             }
-          },
-          required: ['id', 'description', 'choices']
-        }
-      }
-    },
-    required: ['title', 'startStepId', 'steps']
-  };
-  
-  export const generateAdventureStorylet = async (): Promise<AdventureStorylet | null> => {
+          }
+        },
+        required: ['title', 'startStepId', 'steps']
+      };
+      
       const availableMonsters = ['Chuột Đói', 'Chó Hoang', 'Nhện Độc', 'Hổ Vằn Lửa Rừng', 'Linh Thạch Nhân', 'Ma Ảnh Linh Hồn'].join(', ');
       const availableItems = ITEM_LIST.filter(i => ['Nguyên liệu', 'Tiêu hao'].includes(i.type)).map(i => `${i.name} (id: ${i.id})`).slice(0, 10).join('; ');
       
@@ -336,20 +297,10 @@ const adventureStoryletSchema = {
       - Tất cả nội dung phải bằng tiếng Việt.`;
   
       try {
-          const response = await ai.models.generateContent({
-              model: "gemini-2.5-flash",
-              contents: prompt,
-              config: {
-                  responseMimeType: "application/json",
-                  responseSchema: adventureStoryletSchema,
-                  temperature: 0.9,
-              }
-          });
-  
-          const jsonText = response.text.trim();
-          return JSON.parse(jsonText) as AdventureStorylet;
+          const data = await callGeminiProxy({ prompt, schema: adventureStoryletSchema });
+          return data as AdventureStorylet;
       } catch (error) {
-          console.error("Error generating adventure storylet:", error);
+          console.error("Error generating adventure storylet via proxy:", error);
           return null;
       }
   };
