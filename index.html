@@ -140,10 +140,11 @@
   <body>
     <div id="root"></div>
     <script>
-      // Dynamically load the main bundle to prevent Vercel's build analysis from parsing it.
+      // Dynamically load the main module to prevent Vercel's build analysis from parsing it.
+      // Pointing to index.tsx to ensure the latest code is used.
       const script = document.createElement('script');
       script.type = 'module';
-      script.src = '/bundle.js';
+      script.src = '/index.tsx';
       document.body.appendChild(script);
 
       // Register service worker
