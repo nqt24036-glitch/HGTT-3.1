@@ -125,6 +125,7 @@
         animation: lightning-glow 1.5s ease-in-out infinite;
       }
     </style>
+    <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
   <script type="importmap">
 {
   "imports": {
@@ -139,14 +140,8 @@
 </head>
   <body>
     <div id="root"></div>
+    <script type="text/babel" data-type="module" src="index.tsx"></script>
     <script>
-      // Dynamically load the main module to prevent Vercel's build analysis from parsing it.
-      // Pointing to index.tsx to ensure the latest code is used.
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.src = 'index.tsx';
-      document.body.appendChild(script);
-
       // Register service worker
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
