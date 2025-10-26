@@ -1,11 +1,7 @@
-const CACHE_NAME = 'huyen-gioi-tu-tien-v1.5'; // Incremented version to force update
+const CACHE_NAME = 'huyen-gioi-tu-tien-v1.6';
 const urlsToCache = [
   './',
   './index.html',
-  './bundle.js',
-  './manifest.json',
-  './vite.svg',
-  './index.tsx'
 ];
 
 self.addEventListener('install', event => {
@@ -20,21 +16,29 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // We only handle GET requests, POST requests to /api/gemini should not be cached.
-  if (event.request.method !== 'GET') {
+  if (event.request.method !== 'GET' || event.request.url.includes('/api/')) {
     return;
   }
 
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(response => {
-        if (response) {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
-        
-        // For requests not in cache, fetch them from the network.
-        // We don't cache them on the fly to avoid caching API responses or other dynamic content.
-        return fetch(event.request);
+
+        var responseToCache = response.clone();
+
+        caches.open(CACHE_NAME)
+          .then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+
+        return response;
+      })
+      .catch(() => {
+        // If the network fails, try to get it from the cache.
+        return caches.match(event.request);
       })
   );
 });
