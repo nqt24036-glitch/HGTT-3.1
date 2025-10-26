@@ -1,4 +1,4 @@
-const CACHE_NAME = 'huyen-gioi-tu-tien-v1.4'; // Incremented version to force update
+const CACHE_NAME = 'huyen-gioi-tu-tien-v1.5'; // Incremented version to force update
 const urlsToCache = [
   './',
   './index.html',

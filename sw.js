@@ -1,10 +1,11 @@
-const CACHE_NAME = 'huyen-gioi-tu-tien-v1.3'; // Incremented version to force update
+const CACHE_NAME = 'huyen-gioi-tu-tien-v1.5'; // Incremented version to force update
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/bundle.js',
-  '/manifest.json',
-  '/vite.svg'
+  './',
+  './index.html',
+  './bundle.js',
+  './manifest.json',
+  './vite.svg',
+  './index.tsx'
 ];
 
 self.addEventListener('install', event => {
